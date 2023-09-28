@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './src/pages/Home';
-import Sobre from './src/pages/Sobre';
+import CadastrarUsuario from './src/pages/CadastrarUsuario';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,8 +24,8 @@ export default function App(){
             //headerShown: false,
           }}
         /> 
-        <Stack.Screen name="Sobre" component={Sobre} 
-          options={{title: 'Sobre a empresa'}}
+        <Stack.Screen name="CadastrarUsuario" component={CadastrarUsuario} 
+          options={{title: 'Criar Conta'}}
         /> 
       </Stack.Navigator>
     </NavigationContainer>

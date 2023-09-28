@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         
 
     },
-    viewButton:{
+    viewBottom:{
         height: '10%',
         width: '100%',
         
@@ -65,17 +65,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#171717',
         shadowOffset: {width: 3, height: 5},
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.6,
         shadowRadius: 3,
     
-      },
+    },
+    botaoCadastrar: {
+
+        height: 50,
+        width: 120,
+        backgroundColor: 'white',
+        borderRadius: 25,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#171717',
+        shadowOffset: {width: 3, height: 5},
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+        
+    
+    },
  
 });
 
 
 function TelaPrincipal(){
 const navigation = useNavigation();
-const image = require('../imagens/logoPrincipal.gif')
+const image = require('/imagens/logoPrincipal.gif')
 return(
     <View style={styles.container}>
 
@@ -97,13 +113,13 @@ return(
             <Text style={styles.textoBotao}>Iniciar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.botaoIniciar} onPress={ () => navigation.navigate('Sobre')}>
+            <TouchableOpacity style={styles.botaoCadastrar} onPress={ () => navigation.navigate('CadastrarUsuario')}>
             <Text style={styles.textoBotao}>Cadastrar</Text>
             </TouchableOpacity>
 
 
             </View>
-            <View style={styles.viewButton}>
+            <View style={styles.viewBottom}>
 
            
 
