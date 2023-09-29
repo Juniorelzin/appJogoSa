@@ -2,13 +2,16 @@ import React from "react";
 import { ImageBackground,View, Text, StyleSheet, TouchableOpacity, TextInput} from "react-native";
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
+import Checkbox from 'expo-checkbox';
 
 export default function CadastrarUsuario(){
 
     const image = require('/imagens/gifChamas.gif')
+    const [isChecked, setChecked] = useState(false);
     let inputName
     let inputEmail
 
+   
     return(
         <View style={styles.container}>
 
@@ -43,6 +46,13 @@ export default function CadastrarUsuario(){
             style={styles.input}
             value={inputEmail}
            />
+
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? '#000000' : undefined}
+        /> 
 
 
         </View>
