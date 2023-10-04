@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './src/pages/Home';
 import CadastrarUsuario from './src/pages/CadastrarUsuario';
+import TermoDeUsuario from './src/pages/TermoDeUsuario';
+import TelaDeLogin from './src/pages/TelaDeLogin';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,9 +26,15 @@ export default function App(){
             //headerShown: false,
           }}
         /> 
+        <Stack.Screen name="TelaDeLogin" component={TelaDeLogin} 
+          options={{title: 'Login'}}
+        />
         <Stack.Screen name="CadastrarUsuario" component={CadastrarUsuario} 
           options={{title: 'Criar Conta'}}
-        /> 
+        />
+         <Stack.Screen name="TermoDeUsuario" component={TermoDeUsuario} 
+          options={{title: 'Termo de Usuário'}}
+        />  
       </Stack.Navigator>
     </NavigationContainer>
   )

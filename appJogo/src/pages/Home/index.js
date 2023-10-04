@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground,View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image} from "react-native";
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 
@@ -34,9 +34,16 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
+    logo: {
+        height: '90%',
+        width: '90%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     viewTop:{
         height: '60%',
         width: '100%',
+        alignItems: 'center',
         
 
     },
@@ -85,13 +92,24 @@ const styles = StyleSheet.create({
         
     
     },
+    textoBotao: {
+
+        justifyContent: 'center',
+        alignItems: 'center',
+        textShadowColor: '#171717',
+        textShadowOffset: {width: 1, height: 3},
+        textShadowOpacity: 0.6,
+        textShadowRadius: 7,
+
+    },
  
 });
 
 
 function TelaPrincipal(){
 const navigation = useNavigation();
-const image = require('/imagens/logoPrincipal.gif')
+const image = require('/imagens/gifChamas.gif')
+const logo = require('/imagens/logo_sfundo.png')
 return(
     <View style={styles.container}>
 
@@ -102,14 +120,15 @@ return(
 
             <View style={styles.viewTop}>
 
-               
+            <Image style={styles.logo}
+                source={logo}/>
 
 
             </View>
             <View style={styles.viewMiddle}>
 
            
-            <TouchableOpacity style={styles.botaoIniciar} onPress={ () => navigation.navigate('Sobre')}>
+            <TouchableOpacity style={styles.botaoIniciar} onPress={ () => navigation.navigate('TelaDeLogin')}>
             <Text style={styles.textoBotao}>Iniciar</Text>
             </TouchableOpacity>
 
