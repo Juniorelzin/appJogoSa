@@ -28,6 +28,7 @@ export default function App(){
         /> 
         <Stack.Screen name="TelaDeLogin" component={TelaDeLogin} 
           options={{title: 'Login'}}
+        
         />
         <Stack.Screen name="CadastrarUsuario" component={CadastrarUsuario} 
           options={{title: 'Criar Conta'}}
