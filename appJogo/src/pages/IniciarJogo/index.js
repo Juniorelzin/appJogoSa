@@ -83,12 +83,14 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 40,
         marginTop: 10,
+        fontFamily: 'Fredericka the Great Regular',
       
     },
     txtText:{
         color: '#ffffff',
-        fontSize: 20,
+        fontSize: 17,
         marginTop: 10,
+        fontFamily: 'Fredericka the Great Regular',
         
     },
     deckStart:{
@@ -184,16 +186,19 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
         textAlign: 'center',
+        fontFamily: 'Fredericka the Great Regular',
     },
     modalText: {
         marginBottom: 15,
         color: 'white',
         textAlign: 'center',
+        fontFamily: 'Fredericka the Great Regular',
     },
     textStyleEscolher:{
       color: '#000000',
       fontWeight: 'bold',
       textAlign: 'center',
+      fontFamily: 'Fredericka the Great Regular',
 
 
     }
@@ -281,7 +286,7 @@ function Conteudo(){
                   
                     <View style={styles.modalViewCore}>
                     <ScrollView>
-                    <Text style={styles.modalText}>ZUMBIS</Text>
+                   
                     {modalContent && Array.isArray(modalContent) ? (
                       modalContent.map((conteudo, index) => (
                         

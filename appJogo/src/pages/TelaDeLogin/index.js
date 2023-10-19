@@ -34,22 +34,29 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
+    logo: {
+        height: '70%',
+        width: '70%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     viewTop:{
-        height: '30%',
+        height: '60%',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
 
     },
     viewMiddle:{
-        height: '30%',
+        height: '20%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
 
     },
     viewBottom:{
-        height: '40%',
+        height: '20%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
@@ -57,28 +64,31 @@ const styles = StyleSheet.create({
     },
     textoNome:{
         color: '#ffffff',
-        fontSize: 20,
+        fontSize: 25,
         marginBottom: '2%',
+        fontFamily: 'Cabin Sketch Regular',
         
     },
     textoEmail:{
         color: '#ffffff',
-        fontSize: 20,
+        fontSize: 25,
         marginBottom: '2%',
+        fontFamily: 'Cabin Sketch Regular',
     },
     textoSenha:{
         color: '#ffffff',
-        fontSize: 20,
+        fontSize: 25,
         marginBottom: '2%',
+        fontFamily: 'Cabin Sketch Regular',
     },
     input:{
-        height: '15%',
+        height: '20%',
         width: '50%',
         backgroundColor: '#ffffff',
         borderRadius: 25,
         marginBottom: 30,
         paddingLeft: 10,
-
+        fontFamily: 'Fredericka the Great Regular',
 
     },
     botaoLogin: {
@@ -101,6 +111,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textShadowColor: '#171717',
         fontWeight: 'bold',
+        fontSize: 20,
+        fontFamily: 'Fredericka the Great Regular',
 
 
     },
@@ -110,7 +122,7 @@ const styles = StyleSheet.create({
 function TelaPrincipal(){
     const navigation = useNavigation();
     const image = require('/imagens/gifChamas.gif')
-    const logo = require('/imagens/logo_sfundo.png')
+    const logo = require('/imagens/logo_sfundo2.png')
     let inputName
     let inputEmail
     let inputSenha
@@ -120,6 +132,9 @@ function TelaPrincipal(){
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
     
                     <View style={styles.viewTop}>
+
+                    <Image style={styles.logo}
+                            source={logo}/>
 
 
                     </View>

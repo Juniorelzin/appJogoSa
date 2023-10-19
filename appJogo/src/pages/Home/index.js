@@ -97,6 +97,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
+        fontFamily: 'Fredericka the Great Regular',
+        fontSize: 20,
 
     },
  

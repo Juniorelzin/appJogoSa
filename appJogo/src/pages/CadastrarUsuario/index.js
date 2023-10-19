@@ -57,32 +57,38 @@ const styles = StyleSheet.create({
     },
     textoH1:{
         color: '#ffffff',
-        fontSize: 25,
+        fontSize: 35,
         marginBottom: 30,
+        fontFamily: 'Fredericka the Great Regular',
 
     },
     textoNome:{
         color: '#ffffff',
-        fontSize: 20,
-        marginTop: 10
+        fontSize: 25,
+        marginTop: 10,
+        fontFamily: 'Cabin Sketch Regular',
+        
         
     },
     textoEmail:{
         color: '#ffffff',
-        fontSize: 20,
-        marginTop: 10
+        fontSize: 25,
+        marginTop: 10,
+        fontFamily: 'Cabin Sketch Regular',
     },
     textoSenha:{
         color: '#ffffff',
-        fontSize: 20,
-        marginTop: 10
+        fontSize: 25,
+        marginTop: 10,
+        fontFamily: 'Cabin Sketch Regular',
     },
     input:{
-        height: '10%',
-        width: '50%',
+        height: '7%',
+        width: '70%',
         backgroundColor: '#ffffff',
         borderRadius: 25,
         paddingLeft: 10,
+        fontFamily: 'Fredericka the Great Regular',
         
 
     },
@@ -105,6 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
+        fontFamily: 'Fredericka the Great Regular',
+        fontSize: 20,
 
     },
 })
