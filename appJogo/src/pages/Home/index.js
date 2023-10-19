@@ -96,10 +96,7 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
         alignItems: 'center',
-        textShadowColor: '#171717',
-        textShadowOffset: {width: 1, height: 3},
-        textShadowOpacity: 0.6,
-        textShadowRadius: 7,
+        fontWeight: 'bold',
 
     },
  

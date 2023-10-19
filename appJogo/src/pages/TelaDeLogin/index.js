@@ -34,14 +34,15 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
-    logo: {
-        height: '100%',
-        width: '90%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     viewTop:{
-        height: '60%',
+        height: '30%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    viewMiddle:{
+        height: '30%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
@@ -71,19 +72,20 @@ const styles = StyleSheet.create({
         marginBottom: '2%',
     },
     input:{
-        height: '20%',
+        height: '15%',
         width: '50%',
         backgroundColor: '#ffffff',
         borderRadius: 25,
         marginBottom: 30,
         paddingLeft: 10,
 
+
     },
     botaoLogin: {
 
         height: 50,
         width: 120,
-        backgroundColor: 'white',
+        backgroundColor: '#3399cc',
         borderRadius: 25,
         display: 'flex',
         justifyContent: 'center',
@@ -92,16 +94,14 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 3, height: 5},
         shadowOpacity: 0.6,
         shadowRadius: 3,
-        
     },
-    textoBotao: {
+    txtBtnLogin: {
 
         justifyContent: 'center',
         alignItems: 'center',
         textShadowColor: '#171717',
-        textShadowOffset: {width: 1, height: 3},
-        textShadowOpacity: 0.6,
-        textShadowRadius: 7,
+        fontWeight: 'bold',
+
 
     },
   
@@ -121,12 +121,10 @@ function TelaPrincipal(){
     
                     <View style={styles.viewTop}>
 
-                    <Image style={styles.logo}
-                        source={logo}/>
 
                     </View>
 
-                     <View style={styles.viewBottom}>
+                     <View style={styles.viewMiddle}>
 
                      <Text style={styles.textoNome}>Digite seu nome de usuário:</Text>
                         
@@ -150,17 +148,25 @@ function TelaPrincipal(){
 
                             <Text style={{color: '#ff0000'}}></Text>
 
-
-
-
-                            <TouchableOpacity style={styles.botaoLogin}>
-                            <Text style={styles.textoBotao}>Login</Text>
-                            </TouchableOpacity>
-
                     </View>
 
-                  
+                     <View style={styles.viewBottom}>
+
+                        <TouchableOpacity style={styles.botaoLogin} onPress={() => navigation.navigate('IniciarJogo')}>
+                        <Text style={styles.txtBtnLogin}>Entrar</Text>
+                        </TouchableOpacity>
+
+
+                    </View>
                         
+                     
+
+    
+               
+    
+    
+    
+               
     
                 </ImageBackground>   
            

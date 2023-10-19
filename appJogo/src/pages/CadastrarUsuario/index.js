@@ -6,6 +6,7 @@ import Checkbox from 'expo-checkbox';
 
 export default function CadastrarUsuario(){
 
+
     const[conteudoCadastro, setConteudoCadastro] = useState(<Cadastro />);
 
   
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     textoH1:{
         color: '#ffffff',
         fontSize: 25,
-        marginBottom: 30
+        marginBottom: 30,
 
     },
     textoNome:{
@@ -103,11 +104,7 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
         alignItems: 'center',
-        textShadowColor: '#171717',
-        textShadowOffset: {width: 1, height: 3},
-        textShadowOpacity: 0.6,
-        textShadowRadius: 7,
-
+        fontWeight: 'bold',
 
     },
 })
