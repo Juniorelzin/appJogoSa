@@ -27,58 +27,56 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+       
+       
         
     },
     image:{
         height: '100%',
         width: '100%',
         justifyContent: 'center',
+        
     },
     logo: {
-        height: '70%',
-        width: '70%',
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: 300,
+        height: 300,
+        objectFit: 'fill',
+       
     },
     viewTop:{
-        height: '60%',
+        height: '50%',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        
+      
+             
 
     },
     viewMiddle:{
-        height: '20%',
+        height: '25%',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+      
 
     },
     viewBottom:{
-        height: '20%',
+        height: '25%',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
-
+        justifyContent: 'center',
+       
     },
     textoNome:{
         color: '#ffffff',
         fontSize: 25,
-        marginBottom: '2%',
         fontFamily: 'Cabin Sketch Regular',
+       
         
-    },
-    textoEmail:{
-        color: '#ffffff',
-        fontSize: 25,
-        marginBottom: '2%',
-        fontFamily: 'Cabin Sketch Regular',
     },
     textoSenha:{
         color: '#ffffff',
         fontSize: 25,
-        marginBottom: '2%',
         fontFamily: 'Cabin Sketch Regular',
     },
     input:{
@@ -86,9 +84,9 @@ const styles = StyleSheet.create({
         width: '50%',
         backgroundColor: '#ffffff',
         borderRadius: 25,
-        marginBottom: 30,
         paddingLeft: 10,
         fontFamily: 'Fredericka the Great Regular',
+        marginBottom: 20,
 
     },
     botaoLogin: {
@@ -124,7 +122,6 @@ function TelaPrincipal(){
     const image = require('/imagens/gifChamas.gif')
     const logo = require('/imagens/logo_sfundo2.png')
     let inputName
-    let inputEmail
     let inputSenha
     return(
         <View style={styles.container}>

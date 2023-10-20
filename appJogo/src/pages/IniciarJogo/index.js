@@ -1,5 +1,5 @@
-import React from "react";
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
+import React, {useRef}from "react";
+import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
@@ -33,15 +33,33 @@ let deck_goblins = [
 export default function IniciarJogo(){
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
+    const fadeAnim = useRef(new Animated.Value(0)).current
 
+    const fadeIn = () => {
+      
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1500,
+        useNativeDriver: true,
+      }).start();
+    };
+  
+   
     return(
-        <View style={styles.container}>
+        <Animated.View style={[
+          styles.container,
+          {
+           
+            opacity: fadeAnim,
+          },
+        ]}>
+
 
        
         {conteudoFeed}
-        
+        {fadeIn()}
           
-        </View>
+        </Animated.View>
     )
 }
 const styles = StyleSheet.create({
@@ -50,6 +68,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     image: {
         height: '100%',
