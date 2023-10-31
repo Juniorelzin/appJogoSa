@@ -3,34 +3,39 @@ import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Ima
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 let deck_esqueletos = [
-  {image: require('/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000},
-  {image: require('/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800},
-  {image: require('/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600},
-  {image: require('/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500},
-  {image: require('/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700},
+  {image: require('/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
+  {image: require('/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
+  {image: require('/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
+  {image: require('/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
+  {image: require('/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
+  {image: require('/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
 ]
 let deck_magos = [
-  {image: require('/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900},
-  {image: require('/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000},
-  {image: require('/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600},
-  {image: require('/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800},
-  {image: require('/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900},
+  {image: require('/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900, mag: 8, vel: 5, esp: 14},
+  {image: require('/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000, mag: 7, vel: 4, esp: 13},
+  {image: require('/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600, mag: 6, vel: 6, esp: 12},
+  {image: require('/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800, mag: 7, vel: 4, esp: 14},
+  {image: require('/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900, mag: 7, vel: 5, esp: 13},
+  {image: require('/imagens/magos/mago5.jpg') ,nome: 'Animagius', atk: 2000, def: 1800, mag: 8, vel: 4, esp: 13},
 ]
 let deck_goblins = [
-  {image: require('/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800},
-  {image: require('/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500},
-  {image: require('/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600},
-  {image: require('/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600},
-  {image: require('/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700},
-]
+  {image: require('/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
+  {image: require('/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
+  {image: require('/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
+  {image: require('/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
+  {image: require('/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
+  {image: require('/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
+] 
+let userDeck = []
   
 
 
 
 
-export default function IniciarJogo(){
+export default function TelaBatalha(){
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
     const fadeAnim = useRef(new Animated.Value(0)).current
@@ -126,8 +131,8 @@ const styles = StyleSheet.create({
        
     },
     modalView: {
-        height: '90%',
-        width: '90%',
+        height: '95%',
+        width: '95%',
         backgroundColor: 'white',
         borderRadius: 20,  
         alignItems: 'center',
@@ -171,8 +176,8 @@ const styles = StyleSheet.create({
 
     },
     imageModal: {
-        height: 100,
-        width: 70
+        height: 120,
+        width: 90
 
 
     },
@@ -193,11 +198,12 @@ const styles = StyleSheet.create({
 
     },
     modalViewCore:{
-        height: '90%',
-        width: '90%',
-        padding: 10,
+        height: '95%',
+        width: '95%',
+        padding: 5,
         margin: 10,
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+       
 
 
     },
@@ -208,8 +214,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Fredericka the Great Regular',
     },
     modalText: {
+        fontSize: 15,
         marginBottom: 15,
         color: 'white',
+        fontWeight: 'bold',
         textAlign: 'center',
         fontFamily: 'Fredericka the Great Regular',
     },
@@ -220,22 +228,49 @@ const styles = StyleSheet.create({
       fontFamily: 'Fredericka the Great Regular',
 
 
+    },
+    viewIcon: {
+      height: '20%',
+      width: '60%',
+      flexDirection: 'row',
+      marginBottom: 10,
+      justifyContent: 'space-between',
+    
+
+    },
+    iconStats:{
+      height: 20,
+      width: 20
+
     }
 
 })
 
 function Conteudo(){
+    const navigation = useNavigation()
     const [modalVisible, setModalVisible] = useState(false);
     const [modalContent, setModalContent] = useState()
     const image = require('/imagens/gifChamas.gif')
     const starterDeck1 = require('/imagens/deck_Abertura1.png')
     const starterDeck2 = require('/imagens/deck_Abertura2.png')
     const starterDeck3 = require('/imagens/deck_Abertura3.png')
+    const route = useRoute();
+    const nomeJogador = route.params.inputName;
+
+    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/iconAtk.png'))
+    const [imageIconDef, setimageIconDef] = useState(require('/imagens/iconDef.png'))
+    const [imageIconMag, setimageIconMag] = useState(require('/imagens/iconMag.png'))
+    const [imageIconVel, setimageIconVel] = useState(require('/imagens/iconVel.png'))
+    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/iconEsp.png'))
 
 
-    const handlePressIn = (conteudo) => {
-        setModalContent(conteudo);
-        setModalVisible(true);
+    const escolherDeck = () => {
+
+        let userDeck = modalContent
+        let userName = nomeJogador
+        navigation.navigate('TelaNavegacao', { userDeck: userDeck, userName: userName })
+        console.log(userDeck)
+        setModalVisible(false)
       };
     
       const handlePressOut = () => {
@@ -260,7 +295,7 @@ function Conteudo(){
         <View style={styles.container}>
           <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <View style={styles.viewTop}>
-              <Text style={styles.h1Text}>Olá novo Jogador!</Text>
+              <Text style={styles.h1Text}>Olá {nomeJogador}</Text>
               <Text style={styles.txtText}>Escolha um deck inicial para começar:</Text>
             </View>
     
@@ -309,7 +344,7 @@ function Conteudo(){
                     {modalContent && Array.isArray(modalContent) ? (
                       modalContent.map((conteudo, index) => (
                         
-                        <View key={index} style={{flexDirection: 'row', justifyContent: 'space-evenly', padding:10}}>
+                        <View key={index} style={{height: 200, flexDirection: 'row', justifyContent: 'space-evenly', padding:30}}>
                           
                           
                           <View style={styles.viewImage}> 
@@ -321,7 +356,44 @@ function Conteudo(){
                           </View>
 
                           <View style={styles.viewText2}>
-                            <Text style={styles.modalText}> Ataque: {conteudo.atk}, Defesa: {conteudo.def}</Text>
+
+                            <View style={styles.viewIcon}>
+
+                               <Image style={styles.iconStats}source={imageIconAtk}/>
+                               <Text style={styles.modalText}>{conteudo.atk}</Text>
+                               
+                            </View>
+
+                             <View style={styles.viewIcon}>
+
+                               <Image style={styles.iconStats}source={imageIconDef}/>
+                               <Text style={styles.modalText}>{conteudo.def}</Text>
+                               
+                            </View>
+
+                             <View style={styles.viewIcon}>
+
+                               <Image style={styles.iconStats}source={imageIconMag}/>
+                               <Text style={styles.modalText}>{conteudo.mag}</Text>
+                               
+                            </View>
+
+                             <View style={styles.viewIcon}>
+
+                               <Image style={styles.iconStats}source={imageIconVel}/>
+                               <Text style={styles.modalText}>{conteudo.vel}</Text>
+                               
+                            </View>
+
+                             <View style={styles.viewIcon}>
+
+                               <Image style={styles.iconStats}source={imageIconEsp}/>
+                               <Text style={styles.modalText}>{conteudo.esp}</Text>
+                               
+                            </View>
+                                                                           
+
+
                           </View>
                           
                         </View>
@@ -338,7 +410,7 @@ function Conteudo(){
 
                     <TouchableOpacity
                       style={[styles.buttonEscolher]}
-                      onPress={handlePressOut}
+                      onPress={escolherDeck}
                     >
                       <Text style={styles.textStyleEscolher}>Escolher</Text>
                     </TouchableOpacity>
@@ -361,6 +433,7 @@ function Conteudo(){
               
             </View>
           </ImageBackground>
-        </View>
+        </View>     
+        
       );
     }

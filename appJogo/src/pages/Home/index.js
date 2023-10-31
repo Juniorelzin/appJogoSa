@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     logo: {
-        height: '90%',
-        width: '90%',
+        height: 350,
+        width: 350,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -128,7 +128,7 @@ return(
 
            
             <TouchableOpacity style={styles.botaoIniciar} onPress={ () => navigation.navigate('TelaDeLogin')}>
-            <Text style={styles.textoBotao}>Iniciar</Text>
+            <Text style={[styles.textoBotao]}>Iniciar Demo</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.botaoCadastrar} onPress={ () => navigation.navigate('CadastrarUsuario')}>
