@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
 
 function TelaPrincipal(){
 const navigation = useNavigation();
-const image = require('/imagens/gifChamas.gif')
-const logo = require('/imagens/logo_sfundo.png')
+const image = require('/imagens/imagensAssets/gifChamas.gif')
+const logo = require('/imagens/imagensAssets/logo_sfundo.png')
 return(
     <View style={styles.container}>
 

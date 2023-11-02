@@ -524,9 +524,9 @@ const styles = StyleSheet.create({
 
 function Conteudo(){
 
-    if (!deckNPC.length) {
-        sortearDeck();
-    }
+    // if (!deckNPC.length) {
+    //     sortearDeck();
+    // }
   
    
 
@@ -534,8 +534,12 @@ function Conteudo(){
     const route = useRoute();
     const userDeck = route.params.userDeck;
     const userName = route.params.userName;
+    const npcDeck = route.params.npcDeck;
+    const npcName = route.params.npcName;
+
     deckAtualPlayer = userDeck
-   
+    deckNPC = npcDeck
+    
 
     let i = 0
 
@@ -558,7 +562,7 @@ function Conteudo(){
     const [cartaAtualIndexPlayer, setCartaAtualIndexPlayer] = useState(0);
     const [cartaAtualIndexNpc, setCartaAtualIndexNpc] = useState(0);
     const [textResultado, setTextResultado] = useState('')
-    const [iconStat, setIconStat] = useState(require('/imagens/logo.png'))
+    const [iconStat, setIconStat] = useState(require('/imagens/imagensAssets/logo.png'))
     const [textStatJogador, setTextStatJogador] = useState('')
     const [textStatNpc, setTextStatNpc] = useState('')
     const [textResultadoFinal, setTextResultadoFinal] = useState('')
@@ -581,32 +585,32 @@ function Conteudo(){
     const [cardEspNpc, setCardEspNpc] = useState(deckNPC[0].esp)
 
 
-    const [imageBackSideCard, setImageBackSideCard] = useState(require('/imagens/backSideCard5.png'))
-    const [imageBatalhar, setimageBatalhar] = useState(require('/imagens/iconBatalhar.png'))
-    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/iconAtk.png'))
-    const [imageIconDef, setimageIconDef] = useState(require('/imagens/iconDef.png'))
-    const [imageIconMag, setimageIconMag] = useState(require('/imagens/iconMag.png'))
-    const [imageIconVel, setimageIconVel] = useState(require('/imagens/iconVel.png'))
-    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/iconEsp.png'))
+    const [imageBackSideCard, setImageBackSideCard] = useState(require('/imagens/imagensAssets/backSideCard5.png'))
+    const [imageBatalhar, setimageBatalhar] = useState(require('/imagens/imagensAssets/iconBatalhar.png'))
+    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/imagensAssets/iconAtk.png'))
+    const [imageIconDef, setimageIconDef] = useState(require('/imagens/imagensAssets/iconDef.png'))
+    const [imageIconMag, setimageIconMag] = useState(require('/imagens/imagensAssets/iconMag.png'))
+    const [imageIconVel, setimageIconVel] = useState(require('/imagens/imagensAssets/iconVel.png'))
+    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/imagensAssets/iconEsp.png'))
 
    
     
     console.log(imageBackSideCard)
 
     
-    function sortearDeck(){
+    // function sortearDeck(){
 
-        let deckSortearNpc = []
+    //     let deckSortearNpc = []
 
-        deckSortearNpc.push(deck_esqueletos, deck_magos, deck_goblins)
+    //     deckSortearNpc.push(deck_esqueletos, deck_magos, deck_goblins)
     
-        let indice = Math.floor(Math.random() * deckSortearNpc.length)
+    //     let indice = Math.floor(Math.random() * deckSortearNpc.length)
     
-        deckNPC = deckSortearNpc[indice]
+    //     deckNPC = deckSortearNpc[indice]
         
 
 
-    }
+    // }
 
     function shuffleArrayNpc(deckNPC) {
         for (let i = deckNPC.length - 1; i > 0; i--) {
@@ -665,27 +669,27 @@ function Conteudo(){
           switch (roadasJogo){
 
             case(1 - 1):
-              setImageBackSideCard(require('/imagens/backSideCard5.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard5.png'))
             break
 
             case(2 -1):
-              setImageBackSideCard(require('/imagens/backSideCard4.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard4.png'))
             break
 
             case(3 - 1):
-              setImageBackSideCard(require('/imagens/backSideCard3.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard3.png'))
             break
 
             case(4 - 1):
-              setImageBackSideCard(require('/imagens/backSideCard2.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard2.png'))
             break
 
             case(5 - 1):
-              setImageBackSideCard(require('/imagens/backSideCard1.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard1.png'))
             break
 
             case(6 - 1):
-              setImageBackSideCard(require('/imagens/backSideCard0.png'))
+              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard0.png'))
             break
 
             default:
@@ -857,7 +861,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -998,7 +1002,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -1072,7 +1076,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -1187,7 +1191,7 @@ function Conteudo(){
 
         setTextStatNpc(cardAtkNpc)
         setTextStatJogador(cardAtkPlayer)
-        setIconStat(require('/imagens/iconAtk.png'))
+        setIconStat(require('/imagens/imagensAssets/iconAtk.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible)  
 
@@ -1247,7 +1251,7 @@ function Conteudo(){
 
         setTextStatNpc(cardDefNpc)
         setTextStatJogador(cardDefPlayer)
-        setIconStat(require('/imagens/iconDef.png'))
+        setIconStat(require('/imagens/imagensAssets/iconDef.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible)
 
@@ -1305,7 +1309,7 @@ function Conteudo(){
 
         setTextStatNpc(cardMagNpc)
         setTextStatJogador(cardMagPlayer)
-        setIconStat(require('/imagens/iconMag.png'))
+        setIconStat(require('/imagens/imagensAssets/iconMag.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
         
@@ -1364,7 +1368,7 @@ function Conteudo(){
 
         setTextStatNpc(cardVelNpc)
         setTextStatJogador(cardVelPlayer)
-        setIconStat(require('/imagens/iconVel.png'))
+        setIconStat(require('/imagens/imagensAssets/iconVel.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
     }
@@ -1421,7 +1425,7 @@ function Conteudo(){
 
         setTextStatNpc(cardEspNpc)
         setTextStatJogador(cardEspPlayer)
-        setIconStat(require('/imagens/iconEsp.png'))
+        setIconStat(require('/imagens/imagensAssets/iconEsp.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
 

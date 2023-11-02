@@ -272,18 +272,18 @@ function Conteudo(){
     const navigation = useNavigation()
     const [modalVisible, setModalVisible] = useState(false);
     const [modalContent, setModalContent] = useState()
-    const image = require('/imagens/gifChamas.gif')
-    const starterDeck1 = require('/imagens/deck_Abertura1.png')
-    const starterDeck2 = require('/imagens/deck_Abertura2.png')
-    const starterDeck3 = require('/imagens/deck_Abertura3.png')
+    const image = require('/imagens/imagensAssets/gifChamas.gif')
+    const starterDeck1 = require('/imagens/imagensAssets/deck_Abertura1.png')
+    const starterDeck2 = require('/imagens/imagensAssets/deck_Abertura2.png')
+    const starterDeck3 = require('/imagens/imagensAssets/deck_Abertura3.png')
     const route = useRoute();
     const nomeJogador = route.params.inputName;
 
-    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/iconAtk.png'))
-    const [imageIconDef, setimageIconDef] = useState(require('/imagens/iconDef.png'))
-    const [imageIconMag, setimageIconMag] = useState(require('/imagens/iconMag.png'))
-    const [imageIconVel, setimageIconVel] = useState(require('/imagens/iconVel.png'))
-    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/iconEsp.png'))
+    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/imagensAssets/iconAtk.png'))
+    const [imageIconDef, setimageIconDef] = useState(require('/imagens/imagensAssets/iconDef.png'))
+    const [imageIconMag, setimageIconMag] = useState(require('/imagens/imagensAssets/iconMag.png'))
+    const [imageIconVel, setimageIconVel] = useState(require('/imagens/imagensAssets/iconVel.png'))
+    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/imagensAssets/iconEsp.png'))
 
 
     const escolherDeck = () => {
@@ -291,7 +291,7 @@ function Conteudo(){
         let userDeck = modalContent
         let userName = nomeJogador
         navigation.navigate('TelaNavegacao', { userDeck: userDeck, userName: userName })
-        console.log(userDeck)
+        
         setModalVisible(false)
       };
     
@@ -358,7 +358,7 @@ function Conteudo(){
                 <View style={styles.centeredView}>
                 
                   <View style={styles.modalView}>
-                  <ImageBackground source={require('/imagens/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                  <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                   
                     <View style={styles.modalViewCore}>
                     <ScrollView>

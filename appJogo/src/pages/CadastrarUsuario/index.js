@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 
 function Cadastro(){
     const navigation = useNavigation();
-    const image = require('/imagens/gifChamas.gif')
+    const image = require('/imagens/imagensAssets/gifChamas.gif')
     const [isChecked, setChecked] = useState(false);
     let inputName
     let inputEmail

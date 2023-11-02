@@ -31,18 +31,18 @@ let deck_esqueletos = [
   ] 
 
 let vetorNpcs = [
-    {image: require('/imagens/imagemGoblin.jpg') ,nome: 'Greenlurke', text: 'O rei dos goblins duela com um deck de goblins destrutivo', deck: deck_goblins},
-    {image: require('/imagens/deck_Abertura2.png') ,nome: 'Magiacius', text: 'Magiacius usa poderosos magos para dizimar com sua magia', deck: deck_magos},
-    {image: require('/imagens/deck_Abertura1.png') ,nome: 'Shadowgrim', text: 'Terror e morte é o que você pode esperar ao enfrentar Shadowgrim', deck: deck_esqueletos},  
+    {image: require('/imagens/imagensAssets/imagemGoblin.jpg') ,nome: 'Greenlurke', text: 'O rei dos goblins duela com um deck de goblins destrutivo', deck: deck_goblins},
+    {image: require('/imagens/imagensAssets/imagemMago.jpg') ,nome: 'Magiacius', text: 'Magiacius usa poderosos magos para dizimar com sua magia', deck: deck_magos},
+    {image: require('/imagens/imagensAssets/imagemEsqueleto.jpg') ,nome: 'Shadowgrim', text: 'Terror e morte é o que você pode esperar ao enfrentar Shadowgrim', deck: deck_esqueletos},  
 ]
 
 
 export default function TelaNavegacao(){
 
     const[conteudoFeed, setConteudoFeed] = useState(<TelaMapa />);
-    const[iconMap, setIconMap] = useState(require('/imagens/iconeMap.png'));
-    const[iconShop, setIconShop] = useState(require('/imagens/iconeShop.png'));
-    const[iconCard, setIconCard] = useState(require('/imagens/iconeCard.png'));
+    const[iconMap, setIconMap] = useState(require('/imagens/imagensAssets/iconeMap.png'));
+    const[iconShop, setIconShop] = useState(require('/imagens/imagensAssets/iconeShop.png'));
+    const[iconCard, setIconCard] = useState(require('/imagens/imagensAssets/iconeCard.png'));
 
     return(
         <View style={styles.container}>
@@ -133,8 +133,15 @@ const styles = StyleSheet.create({
          
     },
     imagemMapa:{
-        height: 625,
-        width: 380,
+
+        // height: 640,
+        // width: 375,
+
+        height: 676,
+        width: 390,
+
+      
+
     },
     imagemFundoModal:{
         height: '100%',
@@ -334,16 +341,21 @@ function TelaMapa(){
 
 const navigation = useNavigation();
 
+const route = useRoute();
+const userDeck = route.params.userDeck;
+const userName = route.params.userName;
+
+
 const [modalVisible, setModalVisible] = useState(false);
 const [modalConteudo, setModalConteudo] = useState('');
 const [textoBatalhaNumeral, setTextoBatalhaNumeral] = useState('');
 
 
-const imageMapa = require('/imagens/imagemMapa.png')
-const imageFundoModal = require('/imagens/fundo_modal.jpg')
-const logo = require('/imagens/logo_sfundo.png')
+const imageMapa = require('/imagens/imagensAssets/imagemMapa.png')
+const imageFundoModal = require('/imagens/imagensAssets/fundo_modal.jpg')
+const logo = require('/imagens/imagensAssets/logo_sfundo.png')
 
-const[imagemGoblin, setImagemGoblin] = useState(require('/imagens/imagemGoblin.jpg'));
+const[imagemGoblin, setImagemGoblin] = useState(require('/imagens/imagensAssets/imagemGoblin.jpg'));
 
 return(
     <View style={styles.container}>
@@ -401,7 +413,8 @@ return(
 
                                     <TouchableOpacity
                                         style={[styles.BotaoBatalharModal]}
-                                        onPress={() => setModalVisible(!modalVisible)}>
+                                        onPressIn={() => navigation.navigate('TelaBatalha', { userDeck: userDeck, userName: userName, npcDeck: modalConteudo.deck, npcName: modalConteudo.nome })}
+                                        onPressOut={() => setModalVisible(!modalVisible)}>
                                         <Text style={styles.textoBotaoBatalharModal}>Batalhar</Text>
                                     </TouchableOpacity>
 
