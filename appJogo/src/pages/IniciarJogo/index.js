@@ -127,14 +127,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 20, 
        
     },
     modalView: {
         height: '95%',
         width: '95%',
-        backgroundColor: 'white',
-        borderRadius: 20,  
+        backgroundColor: 'white', 
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -146,17 +144,34 @@ const styles = StyleSheet.create({
       elevation: 5,
     },
     button: {
-        borderRadius: 20,
-        padding: 10,
-        margin: 10,
-        elevation: 2,
+      height: 50,
+      width: 120,
+      backgroundColor: 'white',
+      borderRadius: 25,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#171717',
+      shadowOffset: {width: 3, height: 5},
+      shadowOpacity: 0.6,
+      shadowRadius: 3,
+      padding: 5,
+      margin: 5,
     },
     buttonEscolher: {
-      borderRadius: 20,
-      padding: 10,
-      margin: 10,
-      elevation: 2,
-      backgroundColor: '#3399cc',
+      height: 50,
+        width: 150,
+        backgroundColor: '#3399cc',
+        borderRadius: 25,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#171717',
+        shadowOffset: {width: 3, height: 5},
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+        padding: 5,
+        margin: 5,
     },
     buttonClose: {
         backgroundColor: '#ffffff',
@@ -208,10 +223,11 @@ const styles = StyleSheet.create({
 
     },
     textStyle: {
-        color: '#000000',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontWeight: 'bold',
+      fontFamily: 'Fredericka the Great Regular',
+      fontSize: 20,
     },
     modalText: {
         fontSize: 15,
@@ -222,11 +238,11 @@ const styles = StyleSheet.create({
         fontFamily: 'Fredericka the Great Regular',
     },
     textStyleEscolher:{
-      color: '#000000',
+      justifyContent: 'center',
+      alignItems: 'center',
       fontWeight: 'bold',
-      textAlign: 'center',
       fontFamily: 'Fredericka the Great Regular',
-
+      fontSize: 20,
 
     },
     viewIcon: {
@@ -242,6 +258,12 @@ const styles = StyleSheet.create({
       height: 20,
       width: 20
 
+    },
+    viewButton:{
+      width: '100%',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 
 })
@@ -408,6 +430,7 @@ function Conteudo(){
                       </View>
                     ) : null}
 
+                    <View style={styles.viewButton}>
                     <TouchableOpacity
                       style={[styles.buttonEscolher]}
                       onPress={escolherDeck}
@@ -421,6 +444,8 @@ function Conteudo(){
                     >
                       <Text style={styles.textStyle}>Fechar</Text>
                     </TouchableOpacity>
+                    </View>
+
                     </ScrollView>
                     </View>
                     
