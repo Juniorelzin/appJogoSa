@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         height: '50%',
         width: '100%',
         
+        
        
     },
     viewPlayer: {
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#000000',
         
     },
     viewCard: {
@@ -125,14 +127,16 @@ const styles = StyleSheet.create({
         width: '40%',
         backgroundColor: '#000000',
         justifyContent: 'center',
-        alignItems: 'center'
-       
+        alignItems: 'center',
+        
     },
     viewMiddle: {
         height: '100%',
         width: '20%',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: 20,
         
     },
     viewRight: {

@@ -154,24 +154,21 @@ const styles = StyleSheet.create({
       shadowColor: '#171717',
       shadowOffset: {width: 3, height: 5},
       shadowOpacity: 0.6,
+      margin: 7,
       shadowRadius: 3,
-      padding: 5,
-      margin: 5,
     },
     buttonEscolher: {
       height: 50,
-        width: 150,
-        backgroundColor: '#3399cc',
-        borderRadius: 25,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#171717',
-        shadowOffset: {width: 3, height: 5},
-        shadowOpacity: 0.6,
-        shadowRadius: 3,
-        padding: 5,
-        margin: 5,
+      width: 150,
+      backgroundColor: '#3399cc',
+      borderRadius: 25,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#171717',
+      shadowOffset: {width: 3, height: 5},
+      shadowOpacity: 0.6,
+      shadowRadius: 3,
     },
     buttonClose: {
         backgroundColor: '#ffffff',
@@ -213,11 +210,11 @@ const styles = StyleSheet.create({
 
     },
     modalViewCore:{
-        height: '95%',
-        width: '95%',
-        padding: 5,
-        margin: 10,
-        justifyContent: 'space-evenly',
+      height: '80%',
+      width: '95%',
+      padding: 5,
+      margin: 10,
+      justifyContent: 'space-evenly',
        
 
 
@@ -260,10 +257,10 @@ const styles = StyleSheet.create({
 
     },
     viewButton:{
+      height: '20%',
       width: '100%',
-      flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     }
 
 })
@@ -428,7 +425,11 @@ function Conteudo(){
                           Ataque: {modalContent.atk}, Defesa: {modalContent.def}
                         </Text>
                       </View>
-                    ) : null}
+                    ) : null}                 
+
+                    </ScrollView>
+
+                    </View>
 
                     <View style={styles.viewButton}>
                     <TouchableOpacity
@@ -444,9 +445,6 @@ function Conteudo(){
                     >
                       <Text style={styles.textStyle}>Fechar</Text>
                     </TouchableOpacity>
-                    </View>
-
-                    </ScrollView>
                     </View>
                     
                     </ImageBackground>
