@@ -37,8 +37,9 @@ let vetorNpcs = [
 ]
 let vetorFalasVendedor = [
   {fala1: 'Olá amigo', fala2: 'procurando por', fala3: 'novas cartas?'},
-  {fala1: 'O que...', fala2: 'novas cartas?', fala3: 'eu tenho!'},
-  {fala1: 'Cartas fortes', fala2: 'Bonitas e', fala3: 'Cheirosas...'},  
+  {fala1: 'O que...', fala2: 'cartas fortes?', fala3: 'eu tenho!'},
+  {fala1: 'Cartas novas', fala2: 'Bonitas e', fala3: 'Fortes...'},
+  {fala1: 'Você não vai', fala2: 'achar cartas', fala3: 'como essas em lugar nenhum!'},  
 ]
 let indiceFala
 
@@ -438,7 +439,7 @@ const styles = StyleSheet.create({
       viewShop2: {
         height: '33%',
         width: '100%',
-        borderColor: 'green',
+       
       
       },
       viewShop3: {
@@ -446,13 +447,13 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: 'purple',
+    
        
       },
       viewShop4: {
         height: '12%',
         width: '100%',
-        borderColor: 'blue',
+  
       
       },
       viewShop1Dialogo: {
@@ -475,29 +476,31 @@ const styles = StyleSheet.create({
       viewShop3Cartas: {
         height: '95%',
         width: '95%',
-        borderWidth: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        borderColor: 'blue',
         
 
       },
       scrollCards: {
         height: '100%',
         width: '100%',  
-        borderWidth: 5
+       
       },
       viewScrollCards: {
-        flex: 1,
+        height: '100%',
+        width: '100%',
+        marginTop: 10,
         flexDirection: 'row' ,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        borderWidth: 5
+      
 
       },
       stylePacks : {
         height: 150,
-        width: 100
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
 
       },
       centeredViewModalShop: {
@@ -588,15 +591,25 @@ const styles = StyleSheet.create({
 
 
     },
+    modalViewHeaderModalShop:{
+      height: '10%',
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center'
+     
+  },
+  textH1ModalShop: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontFamily: 'Fredericka the Great Regular',
+    fontSize: 23,
+  },
     modalViewCoreModalShop:{
-        height: '80%',
+        height: '70%',
         width: '95%',
-        padding: 5,
-        margin: 10,
+        
         justifyContent: 'space-evenly',
        
-
-
     },
     textStyleModalShop: {
       justifyContent: 'center',
@@ -858,6 +871,11 @@ return(
                 <View style={styles.modalViewModalShop}>
                 <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModalModalShop}>
                 
+                  <View style={styles.modalViewHeaderModalShop}>
+
+                      <Text style={styles.textH1ModalShop}>Cartas que você pode receber</Text>
+
+                  </View>
                   <View style={styles.modalViewCoreModalShop}>
                   <ScrollView>
                  
@@ -978,6 +996,5 @@ function abrirPack3(){
   setModalVisible(true)
 
 }
-
 
 }

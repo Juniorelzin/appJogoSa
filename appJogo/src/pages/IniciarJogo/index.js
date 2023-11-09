@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     txtText:{
         color: '#ffffff',
-        fontSize: 17,
+        fontSize: 19,
         marginTop: 10,
         fontFamily: 'Fredericka the Great Regular',
         
