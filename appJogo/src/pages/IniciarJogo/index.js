@@ -6,28 +6,28 @@ import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
 let deck_esqueletos = [
-  {image: require('/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
-  {image: require('/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
-  {image: require('/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
-  {image: require('/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
-  {image: require('/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
-  {image: require('/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
 ]
 let deck_magos = [
-  {image: require('/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900, mag: 8, vel: 5, esp: 14},
-  {image: require('/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000, mag: 7, vel: 4, esp: 13},
-  {image: require('/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600, mag: 6, vel: 6, esp: 12},
-  {image: require('/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800, mag: 7, vel: 4, esp: 14},
-  {image: require('/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900, mag: 7, vel: 5, esp: 13},
-  {image: require('/imagens/magos/mago5.jpg') ,nome: 'Animagius', atk: 2000, def: 1800, mag: 8, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900, mag: 8, vel: 5, esp: 14},
+  {image: require('../../../assets/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000, mag: 7, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600, mag: 6, vel: 6, esp: 12},
+  {image: require('../../../assets/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800, mag: 7, vel: 4, esp: 14},
+  {image: require('../../../assets/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900, mag: 7, vel: 5, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago5.jpg') ,nome: 'Animagius', atk: 2000, def: 1800, mag: 8, vel: 4, esp: 13},
 ]
 let deck_goblins = [
-  {image: require('/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
-  {image: require('/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
-  {image: require('/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
-  {image: require('/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
-  {image: require('/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
-  {image: require('/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
+  {image: require('../../../assets/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
+  {image: require('../../../assets/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
 ] 
 let userDeck = []
   
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#000000',
         
     },
     image: {
@@ -107,14 +108,14 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 40,
         marginTop: 10,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
       
     },
     txtText:{
         color: '#ffffff',
         fontSize: 19,
         marginTop: 10,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         
     },
     deckStart:{
@@ -223,22 +224,22 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       fontWeight: 'bold',
-      fontFamily: 'Fredericka the Great Regular',
+      fontFamily: 'Fredericka-the-Great',
       fontSize: 20,
     },
     modalText: {
         fontSize: 15,
-        marginBottom: 15,
+        // marginBottom: 15,
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
     },
     textStyleEscolher:{
       justifyContent: 'center',
       alignItems: 'center',
       fontWeight: 'bold',
-      fontFamily: 'Fredericka the Great Regular',
+      fontFamily: 'Fredericka-the-Great',
       fontSize: 20,
 
     },
@@ -269,18 +270,18 @@ function Conteudo(){
     const navigation = useNavigation()
     const [modalVisible, setModalVisible] = useState(false);
     const [modalContent, setModalContent] = useState()
-    const image = require('/imagens/imagensAssets/gifChamas.gif')
-    const starterDeck1 = require('/imagens/imagensAssets/deck_Abertura1.png')
-    const starterDeck2 = require('/imagens/imagensAssets/deck_Abertura2.png')
-    const starterDeck3 = require('/imagens/imagensAssets/deck_Abertura3.png')
+    const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
+    const starterDeck1 = require('../../../assets/imagens/imagensAssets/deck_Abertura1.png')
+    const starterDeck2 = require('../../../assets/imagens/imagensAssets/deck_Abertura2.png')
+    const starterDeck3 = require('../../../assets/imagens/imagensAssets/deck_Abertura3.png')
     const route = useRoute();
     const nomeJogador = route.params.inputName;
 
-    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/imagensAssets/iconAtk.png'))
-    const [imageIconDef, setimageIconDef] = useState(require('/imagens/imagensAssets/iconDef.png'))
-    const [imageIconMag, setimageIconMag] = useState(require('/imagens/imagensAssets/iconMag.png'))
-    const [imageIconVel, setimageIconVel] = useState(require('/imagens/imagensAssets/iconVel.png'))
-    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/imagensAssets/iconEsp.png'))
+    const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
+    const [imageIconDef, setimageIconDef] = useState(require('../../../assets/imagens/imagensAssets/iconDef.png'))
+    const [imageIconMag, setimageIconMag] = useState(require('../../../assets/imagens/imagensAssets/iconMag.png'))
+    const [imageIconVel, setimageIconVel] = useState(require('../../../assets/imagens/imagensAssets/iconVel.png'))
+    const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
 
 
     const escolherDeck = () => {
@@ -355,7 +356,7 @@ function Conteudo(){
                 <View style={styles.centeredView}>
                 
                   <View style={styles.modalView}>
-                  <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                  <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                   
                     <View style={styles.modalViewCore}>
                     <ScrollView>

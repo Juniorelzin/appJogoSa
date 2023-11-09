@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#000000',
     },
     image:{
         height: '100%',
@@ -59,25 +60,25 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 35,
         marginBottom: 30,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
 
     },
     textoNome:{
         color: '#ffffff',
         fontSize: 25,
-        fontFamily: 'Cabin Sketch Regular',
+        fontFamily: 'Cabin-Sketch-Regular',
         
         
     },
     textoEmail:{
         color: '#ffffff',
         fontSize: 25,
-        fontFamily: 'Cabin Sketch Regular',
+        fontFamily: 'Cabin-Sketch-Regular',
     },
     textoSenha:{
         color: '#ffffff',
         fontSize: 25,
-        fontFamily: 'Cabin Sketch Regular',
+        fontFamily: 'Cabin-Sketch-Regular',
     },
     input:{
         height: '7%',
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderRadius: 25,
         paddingLeft: 10,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         fontSize: 15,
         fontWeight: 'bold',
         marginBottom: 15
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         fontSize: 20,
 
     },
@@ -121,11 +122,17 @@ const styles = StyleSheet.create({
 
 function Cadastro(){
     const navigation = useNavigation();
-    const image = require('/imagens/imagensAssets/gifChamas.gif') 
+    const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif') 
     const [isChecked, setChecked] = useState(false);
+    const [opacityBotao, setOpacityBotao] = useState(0.5);
     let inputName
     let inputEmail
     let inputSenha
+
+    const mudarCheckbox = (value) => {
+        setChecked(value);
+        setOpacityBotao(value ? 1 : 0.5);
+      };
 
 return(
 
@@ -189,15 +196,28 @@ return(
         <Checkbox
           style={styles.checkbox}
           value={isChecked}
-          onValueChange={setChecked}
+          onValueChange={mudarCheckbox}
           color={isChecked ? '#3399cc' : undefined}
+          
         /> 
-        <Text style={{color: '#ffffff', marginLeft: 10}}>Tenho mais de 18 anos, e li os <TouchableOpacity style={{color: '#3399cc'}} onPress={ () => navigation.navigate('TermoDeUsuario')}>Termos de usuário</TouchableOpacity> !</Text>
+        <Text style={{color: '#ffffff', marginLeft: 10}}>Tenho mais de 18 anos, e li os </Text>
+        <TouchableOpacity onPress={ () => navigation.navigate('TermoDeUsuario')}><Text style={{color: '#3399cc'}} >Termos de usuário !</Text></TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.botaoCadastrar} disabled={!isChecked} activeOpacity={isChecked ? 0.5 : 1}>
+                    {/* {isChecked && (setOpacityBotao(1))} */}
+
+
+
+
+
+                        <TouchableOpacity style={[styles.botaoCadastrar,{opacity: opacityBotao }]} activeOpacity={0.5}>
+                        <Text style={styles.txtBtnCadastar}>Confirmar</Text>
+                    </TouchableOpacity>
+                    
+
+        {/* <TouchableOpacity style={styles.botaoCadastrar} disabled={!isChecked} activeOpacity={isChecked ? 0.5 : 1}>
             <Text style={styles.txtBtnCadastar}>Confirmar</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
         </View>
 

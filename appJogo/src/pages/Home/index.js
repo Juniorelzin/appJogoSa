@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#000000',
         
     },
     image: {
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         fontSize: 20,
 
     },
@@ -107,8 +108,8 @@ const styles = StyleSheet.create({
 
 function TelaPrincipal(){
 const navigation = useNavigation();
-const image = require('/imagens/imagensAssets/gifChamas.gif')
-const logo = require('/imagens/imagensAssets/logo_sfundo.png')
+const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
+const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo.png')
 return(
     <View style={styles.container}>
 

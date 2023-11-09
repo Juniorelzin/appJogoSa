@@ -2,6 +2,9 @@ import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState, useEffect } from 'react';
+import * as Font from 'expo-font';
+
 
 import Home from './src/pages/Home';
 import CadastrarUsuario from './src/pages/CadastrarUsuario';
@@ -14,6 +17,27 @@ import TelaNavegacao from './src/pages/TelaNavegacao';
 const Stack = createNativeStackNavigator();
 
 export default function App(){
+
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadFont = async () => {
+      await Font.loadAsync({
+        'Fredericka-the-Great': require('./assets/fonts/Fredericka-the-Great.ttf'),
+        'Cabin-Sketch-Regular': require('./assets/fonts/Cabin-Sketch-Regular.ttf'),
+        
+      });
+      setFontLoaded(true);
+    };
+
+    loadFont();
+  }, []);
+
+  if (!fontLoaded) {
+    return null; // testar com carregando
+  }
+
+
   return(
     <NavigationContainer>
       <Stack.Navigator
@@ -24,7 +48,7 @@ export default function App(){
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontFamily: 'Fredericka the Great Regular',
+            fontFamily: 'Fredericka-the-Great',
             fontSize: 20
           },
         }}

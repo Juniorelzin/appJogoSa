@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#000000',
        
        
         
@@ -70,14 +71,14 @@ const styles = StyleSheet.create({
     textoNome:{
         color: '#ffffff',
         fontSize: 25,
-        fontFamily: 'Cabin Sketch Regular',
+        fontFamily: 'Cabin-Sketch-Regular',
        
         
     },
     textoSenha:{
         color: '#ffffff',
         fontSize: 25,
-        fontFamily: 'Cabin Sketch Regular',
+        fontFamily: 'Cabin-Sketch-Regular',
     },
     input:{
         height: '20%',
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderRadius: 25,
         paddingLeft: 10,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         marginBottom: 20,
         fontSize: 25,
         fontWeight: 'bold',
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
         textShadowColor: '#171717',
         fontWeight: 'bold',
         fontSize: 20,
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
 
 
     },
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
 
 function TelaPrincipal(){
     const navigation = useNavigation();
-    const image = require('/imagens/imagensAssets/gifChamas.gif')
-    const logo = require('/imagens/imagensAssets/logo_sfundo2.png')
+    const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
+    const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo2.png')
     const [inputName, setInputName] = useState('');
     let inputSenha
 

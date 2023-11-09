@@ -1,33 +1,33 @@
 import React, {useRef}from "react";
-import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
+import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal, StatusBar} from "react-native";
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import { useRoute } from '@react-navigation/native';
 
 let deck_esqueletos = [
-  {image: require('/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
-  {image: require('/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
-  {image: require('/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
-  {image: require('/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
-  {image: require('/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
-  {image: require('/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
 ]
 let deck_magos = [
-  {image: require('/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900, mag: 8, vel: 5, esp: 14},
-  {image: require('/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000, mag: 7, vel: 4, esp: 13},
-  {image: require('/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600, mag: 6, vel: 6, esp: 12},
-  {image: require('/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800, mag: 7, vel: 4, esp: 14},
-  {image: require('/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900, mag: 7, vel: 5, esp: 13},
-  {image: require('/imagens/magos/mago5.jpg') ,nome: 'Animagius', atk: 2000, def: 1800, mag: 8, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago0.jpg') ,nome: 'Merlin', atk: 2100, def: 1900, mag: 8, vel: 5, esp: 14},
+  {image: require('../../../assets/imagens/magos/mago1.jpg') ,nome: 'Meduxa', atk: 1700, def: 2000, mag: 7, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago2.jpg') ,nome: 'Epocus', atk: 1800, def: 1600, mag: 6, vel: 6, esp: 12},
+  {image: require('../../../assets/imagens/magos/mago3.jpg') ,nome: 'Frontiacus', atk: 1800, def: 1800, mag: 7, vel: 4, esp: 14},
+  {image: require('../../../assets/imagens/magos/mago4.jpg') ,nome: 'Invokyts', atk: 2000, def: 1900, mag: 7, vel: 5, esp: 13},
+  {image: require('../../../assets/imagens/magos/mago5.jpg') ,nome: 'Animagius', atk: 2000, def: 1800, mag: 8, vel: 4, esp: 13},
 ]
 let deck_goblins = [
-  {image: require('/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
-  {image: require('/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
-  {image: require('/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
-  {image: require('/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
-  {image: require('/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
-  {image: require('/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
+  {image: require('../../../assets/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
+  {image: require('../../../assets/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
 ]  
 let deckNPC = []
 let deckAtualPlayer = []
@@ -61,7 +61,7 @@ export default function TelaBatalha(){
             opacity: fadeAnim,
           },
         ]}>
-
+          <StatusBar hidden />
 
        
         {conteudoFeed}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        
+        backgroundColor: '#000000',
     },
     viewTop: {
         height: '50%',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
+      
         
 
     },
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
+        
       },
       fundoModal:{
         height: '100%',
@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         padding: 10,
-        elevation: 2,
         flexDirection: 'row'
       },
       textStyle: {
@@ -223,45 +222,45 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
       },
       textStyleNum: {
         fontSize: 20,
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
       },
       modalText: {
         fontSize: 25,
-        marginBottom: 15,
+        marginBottom: 10,
         color: '#ffffff',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
       },
       nomejogador: {
         color: '#ffffff',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         marginBottom: 3,
         fontSize: 20
       },
       pontos: {
         color: '#ffffff',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         fontSize: 15
       },
       textBatalha: {
         color: '#000000',
         fontWeight: 'bold',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
         fontSize: 15
 
       },
       textRodada: {
         color: '#ffffff',
         fontWeight: 'bold',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
       },
       modalViewAll: {
         height: '100%',
@@ -317,15 +316,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#ffffff',
         fontWeight: 'bold',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
 
       },
       buttonCancelarModal: {
         height: '50%',
         width: '50%',
         borderRadius: 20,
-        padding: 10,
-        elevation: 2,
+        // padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff'
@@ -336,7 +334,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontFamily: 'Fredericka the Great Regular',
+        fontFamily: 'Fredericka-the-Great',
 
       },
       touchIcon: {
@@ -476,13 +474,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
 
       },
       modalView2CardJogadorText: {
         height: '20%',
         width: '100%',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         flexDirection: 'row',
     
@@ -566,7 +563,7 @@ function Conteudo(){
     const [cartaAtualIndexPlayer, setCartaAtualIndexPlayer] = useState(0);
     const [cartaAtualIndexNpc, setCartaAtualIndexNpc] = useState(0);
     const [textResultado, setTextResultado] = useState('')
-    const [iconStat, setIconStat] = useState(require('/imagens/imagensAssets/logo.png'))
+    const [iconStat, setIconStat] = useState(require('../../../assets/imagens/imagensAssets/logo.png'))
     const [textStatJogador, setTextStatJogador] = useState('')
     const [textStatNpc, setTextStatNpc] = useState('')
     const [textResultadoFinal, setTextResultadoFinal] = useState('')
@@ -589,13 +586,13 @@ function Conteudo(){
     const [cardEspNpc, setCardEspNpc] = useState(deckNPC[0].esp)
 
 
-    const [imageBackSideCard, setImageBackSideCard] = useState(require('/imagens/imagensAssets/backSideCard5.png'))
-    const [imageBatalhar, setimageBatalhar] = useState(require('/imagens/imagensAssets/iconBatalhar.png'))
-    const [imageIconAtk, setimageIconAtk] = useState(require('/imagens/imagensAssets/iconAtk.png'))
-    const [imageIconDef, setimageIconDef] = useState(require('/imagens/imagensAssets/iconDef.png'))
-    const [imageIconMag, setimageIconMag] = useState(require('/imagens/imagensAssets/iconMag.png'))
-    const [imageIconVel, setimageIconVel] = useState(require('/imagens/imagensAssets/iconVel.png'))
-    const [imageIconEsp, setimageIconEsp] = useState(require('/imagens/imagensAssets/iconEsp.png'))
+    const [imageBackSideCard, setImageBackSideCard] = useState(require('../../../assets/imagens/imagensAssets/backSideCard5.png'))
+    const [imageBatalhar, setimageBatalhar] = useState(require('../../../assets/imagens/imagensAssets/irBatalhar.png'))
+    const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
+    const [imageIconDef, setimageIconDef] = useState(require('../../../assets/imagens/imagensAssets/iconDef.png'))
+    const [imageIconMag, setimageIconMag] = useState(require('../../../assets/imagens/imagensAssets/iconMag.png'))
+    const [imageIconVel, setimageIconVel] = useState(require('../../../assets/imagens/imagensAssets/iconVel.png'))
+    const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
 
    
     
@@ -673,27 +670,27 @@ function Conteudo(){
           switch (roadasJogo){
 
             case(1 - 1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard5.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard5.png'))
             break
 
             case(2 -1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard4.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard4.png'))
             break
 
             case(3 - 1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard3.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard3.png'))
             break
 
             case(4 - 1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard2.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard2.png'))
             break
 
             case(5 - 1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard1.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard1.png'))
             break
 
             case(6 - 1):
-              setImageBackSideCard(require('/imagens/imagensAssets/backSideCard0.png'))
+              setImageBackSideCard(require('../../../assets/imagens/imagensAssets/backSideCard0.png'))
             break
 
             default:
@@ -741,7 +738,7 @@ function Conteudo(){
                  fontSize: 70,
                  marginBottom: 15,
                  textAlign: 'center',
-                 fontFamily: 'Fredericka the Great Regular',}
+                 fontFamily: 'Fredericka-the-Great',}
 
             }
             else if(cartasDestruidasJogador < cartasDestruidasNpc){
@@ -752,7 +749,7 @@ function Conteudo(){
                   fontSize: 70,
                   marginBottom: 15,
                   textAlign: 'center',
-                  fontFamily: 'Fredericka the Great Regular',}
+                  fontFamily: 'Fredericka-the-Great',}
             }
             else{
 
@@ -762,7 +759,7 @@ function Conteudo(){
                   fontSize: 70,
                   marginBottom: 15,
                   textAlign: 'center',
-                  fontFamily: 'Fredericka the Great Regular',}
+                  fontFamily: 'Fredericka-the-Great',}
 
 
             }
@@ -865,7 +862,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -1006,7 +1003,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -1038,6 +1035,7 @@ function Conteudo(){
                                       </View>
 
                                       <View style={styles.modalView2CardJogador}>
+
                                       <View style={styles.modalView2CardJogadorText}>
                                         <Image style={styles.imageIconStats1}source={iconStat}/>
                                         <Text style={styles.textNomeCard}>{textStatJogador}</Text>
@@ -1046,6 +1044,7 @@ function Conteudo(){
                                         <Image style={styles.imageCardImageModal}source={cardImagePlayer}/>
                                         <Text style={styles.textNomeCard}>{cardNomePlayer}</Text>
                                       </View>
+
                                       </View>
 
                                     </View>
@@ -1080,7 +1079,7 @@ function Conteudo(){
                         }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                        <ImageBackground source={require('/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                        <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
                             
 
                             <View style={styles.modalViewAll}>
@@ -1097,14 +1096,18 @@ function Conteudo(){
                                           <View style={{height: '100%', width: '50%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
                                                         <Text style={styles.modalText}>{userName}</Text>
-                                                        <Text style={styles.modalText}>Total de cartas que destrui:</Text>
+                                                        <Text style={styles.modalText}>Total de</Text>
+                                                        <Text style={styles.modalText}>cartas</Text>
+                                                        <Text style={styles.modalText}>que destrui:</Text>
                                                         <Text style={styles.modalText}>{vidaJogador}</Text>
                                          
                                         </View>
                                         <View style={{height: '100%', width: '50%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
                                                         <Text style={styles.modalText}>Jogador 2</Text>
-                                                        <Text style={styles.modalText}>Total de cartas que destrui:</Text>
+                                                        <Text style={styles.modalText}>Total de</Text>
+                                                        <Text style={styles.modalText}>cartas</Text>
+                                                        <Text style={styles.modalText}>que destrui:</Text>
                                                         <Text style={styles.modalText}>{vidaNPC}</Text>
                                          
                                         </View>   
@@ -1158,7 +1161,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1172,7 +1175,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1188,14 +1191,14 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
        }
 
         setTextStatNpc(cardAtkNpc)
         setTextStatJogador(cardAtkPlayer)
-        setIconStat(require('/imagens/imagensAssets/iconAtk.png'))
+        setIconStat(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible)  
 
@@ -1217,7 +1220,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
             
@@ -1232,7 +1235,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1248,14 +1251,14 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
        }
 
         setTextStatNpc(cardDefNpc)
         setTextStatJogador(cardDefPlayer)
-        setIconStat(require('/imagens/imagensAssets/iconDef.png'))
+        setIconStat(require('../../../assets/imagens/imagensAssets/iconDef.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible)
 
@@ -1276,7 +1279,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1290,7 +1293,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1306,14 +1309,14 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
        }
 
         setTextStatNpc(cardMagNpc)
         setTextStatJogador(cardMagPlayer)
-        setIconStat(require('/imagens/imagensAssets/iconMag.png'))
+        setIconStat(require('../../../assets/imagens/imagensAssets/iconMag.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
         
@@ -1335,7 +1338,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1349,7 +1352,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1365,14 +1368,14 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
        }
 
         setTextStatNpc(cardVelNpc)
         setTextStatJogador(cardVelPlayer)
-        setIconStat(require('/imagens/imagensAssets/iconVel.png'))
+        setIconStat(require('../../../assets/imagens/imagensAssets/iconVel.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
     }
@@ -1392,7 +1395,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1406,7 +1409,7 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
 
@@ -1422,14 +1425,14 @@ function Conteudo(){
               fontWeight: 'bold',
               fontSize: 20,
               textAlign: 'center',
-              fontFamily: 'Fredericka the Great Regular',
+              fontFamily: 'Fredericka-the-Great',
             }
 
        }
 
         setTextStatNpc(cardEspNpc)
         setTextStatJogador(cardEspPlayer)
-        setIconStat(require('/imagens/imagensAssets/iconEsp.png'))
+        setIconStat(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
         setModalVisible(false)
         setModalResultVisible(!modalResultVisible) 
 
