@@ -119,8 +119,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
       
-        
-
     },
     viewLeft: {
         height: '100%',
@@ -514,6 +512,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
       },
+      
      
         
 

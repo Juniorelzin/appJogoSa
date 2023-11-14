@@ -43,6 +43,23 @@ let vetorFalasVendedor = [
 ]
 let indiceFala
 
+let userDeck
+
+let inventario = [
+  {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
+  {image: require('../../../assets/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
+  {image: require('../../../assets/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
+  {image: require('../../../assets/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
+  {image: require('../../../assets/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
+  {image: require('../../../assets/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
+]
+
 
 export default function TelaNavegacao(){
 
@@ -73,7 +90,7 @@ export default function TelaNavegacao(){
 
     }
     function mostrarDeck(){
-      setConteudoFeed(<TelaMapa />)
+      setConteudoFeed(<TelaDeck />)
 
       setLeftColor('#000000')
       setMiddleColor('#000000')
@@ -91,10 +108,11 @@ export default function TelaNavegacao(){
 
        
             <View style={styles.conteudo}>
-                    <ScrollView>
+                   
+        
                      {conteudoFeed}
-                     </ScrollView>
-
+                    
+                  
             </View>
 
 
@@ -634,11 +652,321 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-    }
+    },
+    // containerTelaDeck: {
+    //   height: 600,
+    //   width: 300,
+    //   justifyContent:'flex-start',
+    //   backgroundColor: 'white'
+      
+    // },
+    viewTelaDeckCima: {
+      height: '50%',
+      width: '100%',
+      borderWidth: 1,
+      borderColor: 'red'
+    },
+    viewTelaDeckBaixo: {
+      height: '50%',
+      width: '100%',
+      borderWidth: 1,
+      borderColor: 'blue'
+    },
+    viewTelaDeckCimaCima: {
+      height: '20%',
+      width: '100%',
+      borderWidth: 1,
+      borderColor: 'green',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    viewTelaDeckCimaBaixo: {
+      height: '80%',
+      width: '100%',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: 'black'
+    },
+    viewTelaDeckBaixoCima: {
+      height: '20%',
+      width: '100%',
+      borderWidth: 1,
+      borderColor: 'purple',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    viewTelaDeckBaixoBaixo: {
+      height: '80%',
+      width: '100%',
+      flexDirection: 'column',
+      borderWidth: 1,
+      borderColor: 'red'
+    },
+    imagemDeck:{
+      height: '100%',
+      width: '100%',
+      justifyContent: 'center',
+    },
+    textoTelaDeck:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontWeight: 'bold',
+      fontFamily: 'Fredericka-the-Great',
+      fontSize: 20,
+    },
+    imageCartaDeck: {
+      height: 90,
+      width: 70,
+      borderRadius: 15,
 
+    },
+    imageCartaInventario: {
+      height: 80,
+      width: 60,
+      borderRadius: 15,
+    },
+    viewPrimeiraLinha: {
+      height: '50%',
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center'
+    },
+    viewSegundaLinha: {
+      height: '50%',
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center'
+    },
+    colunaDeck: {
+      flexDirection: 'row',
+      borderWidth: 5,
+      borderColor: 'black',
+      justifyContent: 'space-evenly',
+      
+    },
+    centeredViewModalDeck: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 20,   
+  },
+  modalViewDeck: {
+    height: '95%',
+    width: '95%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+   
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
     
+  },
+  modalViewAllDeck: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+ 
+  },
+  modalViewTextDeck: {
+    height: '10%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  modalTextDeck: {
+    fontSize: 25,
+    marginBottom: 10,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Fredericka-the-Great',
+  },
+  modalViewCardDeck: {
+    height: '45%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+ 
+  },
+  imageCardImageDeck: {
+    height: 200,
+    width: 150,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  
+  },
+  textNomeCardDeck: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontFamily: 'Fredericka-the-Great',
+
+  },
+  modalViewStatsAllDeck: {
+    height: '30%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  
+  },
+  modalViewStats1Deck: {
+    height: '100%',
+    width: '50%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    
+  },
+  modalViewStats2Deck: {
+    height: '100%',
+    width: '50%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  
+  },
+  imageIconStats1Deck: {
+    height: 40,
+    width: 40,
+ 
+
+  },
+  imageIconStats2Deck: {
+    height: 30,
+    width: 30,
+ 
+
+  },
+  viewIconStatsDeck: {
+    height: '100%',
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'center',
+ 
+  },
+  viewTextStatsDeck: {
+    height: '100%',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+ 
+
+  },
+  viewIStatsAtkDeck: {
+    height: '33%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+ 
+
+  },
+  viewIStatsDefDeck: {
+    height: '33%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
 
 
+  },
+  viewIStatsMagDeck: {
+    height: '33%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  
+
+  },
+  viewIStatsVelDeck: {
+    height: '50%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  
+  
+
+  },
+  viewIStatsEspDeck: {
+    height: '50%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+   
+
+  },
+  textStyleDeck: {
+    fontSize: 14,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Fredericka-the-Great',
+  },
+  textStyleNumDeck: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Fredericka-the-Great',
+  },
+  fundoModal:{
+    height: '100%',
+    width: '100%',
+    borderRadius: 20,  
+    justifyContent: 'center',
+
+},
+viewEspacamento: {
+  height: '100%',
+  width: '100%',
+  borderRadius: 20,
+  padding: 10,
+  flexDirection: 'row'
+},
+modalViewButtonDeck: {
+  height: '15%',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+
+},
+textStyleButtonModalDeck: {
+  fontSize: 20,
+  color: '#000000',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontFamily: 'Fredericka-the-Great',
+
+},
+buttonCancelarModalDeck: {
+  height: '50%',
+  width: '50%',
+  borderRadius: 20,
+  // padding: 10,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#ffffff'
+
+},
  
  
 });
@@ -649,7 +977,7 @@ function TelaMapa(){
 const navigation = useNavigation();
 
 const route = useRoute();
-const userDeck = route.params.userDeck;
+userDeck = route.params.userDeck;
 const userName = route.params.userName;
 
 
@@ -666,8 +994,10 @@ const[imagemGoblin, setImagemGoblin] = useState(require('../../../assets/imagens
 
 return(
     <View style={styles.container}>
-
+        <ScrollView>
             <ImageBackground source={imageMapa} resizeMode="cover" style={styles.imagemMapa}>
+
+            
 
                     <TouchableOpacity activeOpacity={ 0.7 } onPress={() => batalha1()}>
                         <Image style={styles.imagemNpcMapaGoblin}source={vetorNpcs[0].image}/>
@@ -680,9 +1010,9 @@ return(
                     <TouchableOpacity activeOpacity={ 0.7 } onPress={() => batalha3()}>
                         <Image style={styles.imagemNpcMapaSkull}source={vetorNpcs[2].image}/>
                     </TouchableOpacity>
-
+              
             </ImageBackground>
-
+            </ScrollView>
             <View style={styles.centeredView}>
                     <Modal
                         animationType="slide"
@@ -732,6 +1062,8 @@ return(
                                     </TouchableOpacity>
                                 
                                 </View>
+                                
+
                             </ImageBackground>
                             </View>
                         </View>
@@ -789,8 +1121,10 @@ function TelaShop(){
 
 return(
   <View style={styles.container}>
-
+    <ScrollView>
       <ImageBackground source={imageShop} resizeMode="cover" style={styles.imagemVendedor}>
+
+      
 
           <View style={styles.viewShop1}>
               <View style={styles.viewShop1Dialogo}>
@@ -830,9 +1164,9 @@ return(
 
           <View style={styles.viewShop4}>           
           </View>
-
+          
       </ImageBackground>
-
+      </ScrollView>
 
 
 
@@ -977,5 +1311,258 @@ function abrirPack3(){
   setModalVisible(true)
 
 }
+
+}
+
+function TelaDeck(){
+
+  const [modalVisibleDeck, setModalVisibleDeck] = useState(false);
+  const [statsCardDeck, setStatsCardDeck] = useState(0);
+
+
+
+  const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
+  const [imageIconDef, setimageIconDef] = useState(require('../../../assets/imagens/imagensAssets/iconDef.png'))
+  const [imageIconMag, setimageIconMag] = useState(require('../../../assets/imagens/imagensAssets/iconMag.png'))
+  const [imageIconVel, setimageIconVel] = useState(require('../../../assets/imagens/imagensAssets/iconVel.png'))
+  const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
+
+  const meio = Math.ceil(userDeck.length / 2);
+  const primeiraLinha = userDeck.slice(0, meio);
+  const segundaLinha = userDeck.slice(meio);
+
+  const objetosPorLinha = 5;
+  const numeroDeColunas = Math.ceil(inventario.length / objetosPorLinha);
+  const colunas = Array.from({ length: numeroDeColunas }, (_, index) =>
+  inventario.slice(index * objetosPorLinha, (index + 1) * objetosPorLinha)
+  );
+
+  return(
+    <View style = {styles.container}>
+        {/* <View style = {styles.containerTelaDeck}> */}
+      
+            <View style = {styles.viewTelaDeckCima}>
+
+                <View style = {styles.viewTelaDeckCimaCima}>
+                        <Text style = {styles.textoTelaDeck}>Seu Deck Atual:</Text>
+                </View>
+                <View style = {styles.viewTelaDeckCimaBaixo}>
+
+                    <View style = {styles.viewPrimeiraLinha}>
+
+                            {primeiraLinha.map((carta, index) => (
+                              <View  style = {styles.viewCartaDeck} key={index}>
+
+                                  <TouchableOpacity onPress={() => abrirModalDeck(carta)}>
+                                  <Image style={styles.imageCartaDeck}source={carta.image}/>
+                                  </TouchableOpacity>
+
+                              </View>
+                            ))}
+
+                    </View>
+
+                    <View style = {styles.viewSegundaLinha}>
+
+                            {segundaLinha.map((carta, index) => (
+                              <View  style = {styles.viewCartaDeck} key={index}>
+
+                                  <TouchableOpacity onPress={() => abrirModalDeck(carta)}>
+                                  <Image style={styles.imageCartaDeck}source={carta.image}/>
+                                  </TouchableOpacity>
+    
+                              </View>
+                            ))}
+
+                    </View>
+
+
+                </View>
+
+            </View>
+
+        
+            <View style = {styles.viewTelaDeckBaixo}>
+
+                <View style = {styles.viewTelaDeckBaixoCima}>
+                          <Text style = {styles.textoTelaDeck}>Seu Inventário:</Text>
+                </View>
+                <View style = {styles.viewTelaDeckBaixoBaixo}>
+                    
+                    <ScrollView>
+
+                      {colunas.map((coluna, colunaIndex) => (
+                      <View key={colunaIndex} style={styles.colunaDeck}>
+                      {coluna.map((carta, cartaIndex) => (
+                      <View key={cartaIndex}>
+
+                      <TouchableOpacity>
+                      <Image style={styles.imageCartaInventario}source={carta.image}/>
+                      </TouchableOpacity>
+
+                      </View>
+                        ))}
+                      </View>
+                      ))}     
+
+                    </ScrollView>
+                </View>
+          
+            </View>
+        
+        {/* </View> */}
+    
+    
+
+      
+
+      <View style={styles.centeredViewModalDeck}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisibleDeck}
+                        onRequestClose={() => {
+                          setModalVisibleDeck(!modalVisibleDeck);
+                        }}>
+                    <View style={styles.centeredViewModalDeck}>
+                        <View style={styles.modalViewDeck}>
+                        <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                            
+
+                            <View style={styles.modalViewAllDeck}>
+
+                              <View style={styles.modalViewTextDeck}>
+
+                                  <Text style={styles.modalTextDeck}>Atributos: </Text>
+
+                              </View>
+
+                              <View style={styles.modalViewCardDeck}>
+
+                                  <Image style={styles.imageCardImageDeck} source={statsCardDeck.image}/>
+                                  <Text style={styles.textNomeCardDeck}>{statsCardDeck.nome}</Text>
+
+                              </View>
+
+                              <View style={styles.modalViewStatsAllDeck}>
+
+                              <View style={styles.modalViewStats1Deck}>
+
+
+                                  <View style={styles.viewIStatsAtkDeck}>
+                                 
+                                   <View  style={styles.viewEspacamento}>
+                                      <View style={styles.viewIconStatsDeck}>
+                                      <Image style={styles.imageIconStats1Deck}source={imageIconAtk}/>
+                                      </View>
+                                      <View style={styles.viewTextStatsDeck}>
+                                    <Text style={styles.textStyleDeck}>ATAQUE</Text>
+                                    <Text style={styles.textStyleNumDeck}>{statsCardDeck.atk}</Text>
+                                     </View>
+                                     </View>
+                                </View>
+
+                                
+
+                                  <View style={styles.viewIStatsDefDeck}>
+                                  
+                                  <View  style={styles.viewEspacamento}>
+                                      <View style={styles.viewIconStatsDeck}>
+                                      <Image style={styles.imageIconStats1Deck}source={imageIconDef}/>
+                                      </View>
+                                      <View style={styles.viewTextStatsDeck}>
+                                    <Text style={styles.textStyleDeck}>DEFESA</Text>
+                                    <Text style={styles.textStyleNumDeck}>{statsCardDeck.def}</Text>
+                                     </View>
+                                     </View>
+                                </View>
+
+
+
+                                <View style={styles.viewIStatsMagDeck}>
+                                 
+                                <View  style={styles.viewEspacamento}>
+                                      <View style={styles.viewIconStatsDeck}>
+                                      <Image style={styles.imageIconStats1Deck}source={imageIconMag}/>
+                                      </View>
+                                      <View style={styles.viewTextStatsDeck}>
+                                    <Text style={styles.textStyleDeck}>MAGIA</Text>
+                                    <Text style={styles.textStyleNumDeck}>{statsCardDeck.mag}</Text>
+                                     </View>
+                                     </View>
+                                </View>
+
+
+                              </View>
+
+                              <View style={styles.modalViewStats2Deck}>
+
+                                <View style={styles.viewIStatsVelDeck}>
+                                
+                                <View  style={styles.viewEspacamento}>
+                                      <View style={styles.viewIconStatsDeck}>
+                                      <Image style={styles.imageIconStats2Deck}source={imageIconVel}/>
+                                      </View>
+                                      <View style={styles.viewTextStatsDeck}>
+                                    <Text style={styles.textStyleDeck}>VELOCIDADE</Text>
+                                    <Text style={styles.textStyleNumDeck}>{statsCardDeck.vel}</Text>
+                                     </View>
+                                     </View>
+                                </View>
+
+
+
+                                <View style={styles.viewIStatsEspDeck}>
+                               
+                                <View  style={styles.viewEspacamento}>
+                                      <View style={styles.viewIconStatsDeck}>
+                                      <Image style={styles.imageIconStats2Deck}source={imageIconEsp}/>
+                                      </View>
+                                      <View style={styles.viewTextStatsDeck}>
+                                    <Text style={styles.textStyleDeck}>ESPECIAL</Text>
+                                    <Text style={styles.textStyleNumDeck}>{statsCardDeck.esp}</Text>
+                                     </View>
+                                     </View>
+                                </View>
+
+
+                            
+
+
+                              </View>
+
+                              </View>
+
+                              <View style={styles.modalViewButtonDeck}>
+
+                                  <TouchableOpacity
+                                    style={[styles.buttonCancelarModalDeck]}
+                                    onPress={() => setModalVisibleDeck(!modalVisibleDeck)}>
+                                    <Text style={styles.textStyleButtonModalDeck}>Cancelar</Text>
+                                  </TouchableOpacity>
+
+                              </View>    
+
+                            </View>
+                          </ImageBackground>
+                        </View>
+                    </View>
+                    </Modal>
+                </View>
+                
+    </View>
+
+
+
+
+  )
+
+  function abrirModalDeck(carta){
+
+    setStatsCardDeck(carta)
+    setModalVisibleDeck(true)
+
+
+  }
 
 }
