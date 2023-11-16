@@ -663,22 +663,25 @@ const styles = StyleSheet.create({
     viewTelaDeckCima: {
       height: '50%',
       width: '100%',
-      borderWidth: 1,
-      borderColor: 'red'
+      justifyContent: 'center',
+      alignItems: 'center',
+    
     },
     viewTelaDeckBaixo: {
       height: '50%',
       width: '100%',
-      borderWidth: 1,
-      borderColor: 'blue'
+      justifyContent: 'center',
+      alignItems: 'center',
+     
+   
     },
     viewTelaDeckCimaCima: {
       height: '20%',
-      width: '100%',
-      borderWidth: 1,
-      borderColor: 'green',
+      width: '90%',
       justifyContent: 'center',
       alignItems: 'center',
+      borderRadius: 20,
+  
     },
     viewTelaDeckCimaBaixo: {
       height: '80%',
@@ -686,23 +689,22 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 1,
-      borderColor: 'black'
+      
     },
     viewTelaDeckBaixoCima: {
       height: '20%',
-      width: '100%',
-      borderWidth: 1,
-      borderColor: 'purple',
+      width: '90%',
       justifyContent: 'center',
       alignItems: 'center',
+      borderRadius: 20,
+     
     },
     viewTelaDeckBaixoBaixo: {
       height: '80%',
       width: '100%',
       flexDirection: 'column',
-      borderWidth: 1,
-      borderColor: 'red'
+      margin: 5
+      
     },
     imagemDeck:{
       height: '100%',
@@ -743,9 +745,8 @@ const styles = StyleSheet.create({
     },
     colunaDeck: {
       flexDirection: 'row',
-      borderWidth: 5,
-      borderColor: 'black',
       justifyContent: 'space-evenly',
+      margin: 10
       
     },
     centeredViewModalDeck: {
@@ -778,7 +779,7 @@ const styles = StyleSheet.create({
  
   },
   modalViewTextDeck: {
-    height: '10%',
+    height: '5%',
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -931,8 +932,16 @@ const styles = StyleSheet.create({
   fundoModal:{
     height: '100%',
     width: '100%',
-    borderRadius: 20,  
     justifyContent: 'center',
+
+},
+fundoTextDeck:{
+  height: '100%',
+  width: '100%',
+  borderRadius: 15,
+  justifyContent: 'center',
+  alignItems: 'center',
+  overflow: 'hidden',
 
 },
 viewEspacamento: {
@@ -943,7 +952,7 @@ viewEspacamento: {
   flexDirection: 'row'
 },
 modalViewButtonDeck: {
-  height: '15%',
+  height: '20%',
   width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
@@ -957,14 +966,37 @@ textStyleButtonModalDeck: {
   fontFamily: 'Fredericka-the-Great',
 
 },
-buttonCancelarModalDeck: {
-  height: '50%',
-  width: '50%',
-  borderRadius: 20,
-  // padding: 10,
+buttonTrocarModalDeck: {
+  height: 50,
+  width: 150,
+  backgroundColor: '#3399cc',
+  borderRadius: 25,
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#ffffff'
+  shadowColor: '#171717',
+  shadowOffset: {width: 3, height: 5},
+  shadowOpacity: 0.6,
+  shadowRadius: 3,
+  padding: 5,
+  margin: 5,
+  
+
+},
+buttonCancelarModalDeck: {
+  height: 50,
+  width: 120,
+  backgroundColor: 'white',
+  borderRadius: 25,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  shadowColor: '#171717',
+  shadowOffset: {width: 3, height: 5},
+  shadowOpacity: 0.6,
+  shadowRadius: 3,
+  padding: 5,
+  margin: 5,
 
 },
  
@@ -1188,7 +1220,7 @@ return(
                 
                   <View style={styles.modalViewHeaderModalShop}>
 
-                      <Text style={styles.textH1ModalShop}>Cartas que você pode receber</Text>
+                      <Text style={styles.textH1ModalShop}>Cartas que você pode receber:</Text>
 
                   </View>
                   <View style={styles.modalViewCoreModalShop}>
@@ -1319,6 +1351,8 @@ function TelaDeck(){
   const [modalVisibleDeck, setModalVisibleDeck] = useState(false);
   const [statsCardDeck, setStatsCardDeck] = useState(0);
 
+  const [textoBtnTrocarCarta, setTextoBtnTrocarCarta] = useState()
+
 
 
   const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
@@ -1339,14 +1373,20 @@ function TelaDeck(){
 
   return(
     <View style = {styles.container}>
+      <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
         {/* <View style = {styles.containerTelaDeck}> */}
       
             <View style = {styles.viewTelaDeckCima}>
 
                 <View style = {styles.viewTelaDeckCimaCima}>
+                <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundoPergaminho.png')} resizeMode="cover" style={styles.fundoTextDeck}>
+                
                         <Text style = {styles.textoTelaDeck}>Seu Deck Atual:</Text>
+
+                </ImageBackground>        
                 </View>
                 <View style = {styles.viewTelaDeckCimaBaixo}>
+                
 
                     <View style = {styles.viewPrimeiraLinha}>
 
@@ -1376,7 +1416,7 @@ function TelaDeck(){
 
                     </View>
 
-
+                  
                 </View>
 
             </View>
@@ -1385,18 +1425,22 @@ function TelaDeck(){
             <View style = {styles.viewTelaDeckBaixo}>
 
                 <View style = {styles.viewTelaDeckBaixoCima}>
+                <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundoPergaminho.png')} resizeMode="cover" style={styles.fundoTextDeck}>
+
                           <Text style = {styles.textoTelaDeck}>Seu Inventário:</Text>
+
+                </ImageBackground>          
                 </View>
                 <View style = {styles.viewTelaDeckBaixoBaixo}>
-                    
+            
                     <ScrollView>
-
+                    
                       {colunas.map((coluna, colunaIndex) => (
                       <View key={colunaIndex} style={styles.colunaDeck}>
                       {coluna.map((carta, cartaIndex) => (
                       <View key={cartaIndex}>
 
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={() => abrirModalInventario(carta)}>
                       <Image style={styles.imageCartaInventario}source={carta.image}/>
                       </TouchableOpacity>
 
@@ -1404,8 +1448,9 @@ function TelaDeck(){
                         ))}
                       </View>
                       ))}     
-
+                     
                     </ScrollView>
+                  
                 </View>
           
             </View>
@@ -1536,9 +1581,15 @@ function TelaDeck(){
                               <View style={styles.modalViewButtonDeck}>
 
                                   <TouchableOpacity
+                                    style={[styles.buttonTrocarModalDeck]}
+                                    onPress={() => VerificarTRoca()}>
+                                    <Text style={styles.textStyleButtonModalDeck}>{textoBtnTrocarCarta}</Text>
+                                  </TouchableOpacity>
+
+                                  <TouchableOpacity
                                     style={[styles.buttonCancelarModalDeck]}
                                     onPress={() => setModalVisibleDeck(!modalVisibleDeck)}>
-                                    <Text style={styles.textStyleButtonModalDeck}>Cancelar</Text>
+                                    <Text style={styles.textStyleButtonModalDeck}>Fechar</Text>
                                   </TouchableOpacity>
 
                               </View>    
@@ -1549,16 +1600,40 @@ function TelaDeck(){
                     </View>
                     </Modal>
                 </View>
-                
+        </ImageBackground>      
     </View>
 
 
 
 
   )
+  function VerificarTRoca()
+  
+  {
 
+    if(textoBtnTrocarCarta == '=> Inventário'){
+
+      console.log('ola')
+
+    }else if(textoBtnTrocarCarta == '=> Deck'){
+
+      console.log('hope')
+
+    }
+
+
+  }
   function abrirModalDeck(carta){
 
+    setTextoBtnTrocarCarta('=> Inventário')
+    setStatsCardDeck(carta)
+    setModalVisibleDeck(true)
+
+
+  }
+  function abrirModalInventario(carta){
+
+    setTextoBtnTrocarCarta('=> Deck')
     setStatsCardDeck(carta)
     setModalVisibleDeck(true)
 
