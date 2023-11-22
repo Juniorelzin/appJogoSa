@@ -63,6 +63,11 @@ let inventario = [
 
 export default function TelaNavegacao(){
 
+    const route = useRoute();
+    userDeck = route.params.userDeck;
+    const userName = route.params.userName;
+    let dinheiroJogador = 100
+
     const[conteudoFeed, setConteudoFeed] = useState(<TelaMapa />);
     const[iconMap, setIconMap] = useState(require('../../../assets/imagens/imagensAssets/iconeMap.png'));
     const[iconShop, setIconShop] = useState(require('../../../assets/imagens/imagensAssets/iconeShop.png'));
@@ -103,7 +108,8 @@ export default function TelaNavegacao(){
 
             <View style={styles.header}>
 
-          
+            <Text style={styles.textHeader}>{userName}</Text> <Text style={styles.textHeader}>$ {dinheiroJogador}</Text>
+
             </View>
 
        
@@ -177,10 +183,18 @@ const styles = StyleSheet.create({
     header:{
         height: '10%',
         width: '100%',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#000000'
+        backgroundColor: '#000000',
+        flexDirection: 'row'
         
+    },
+    textHeader:{
+      fontSize: 25,
+      color: '#ffffff',
+      fontWeight: 'bold',
+      textAlign: 'center',
+      fontFamily: 'Fredericka-the-Great',
     },
     conteudo:{
         flex: 1,
@@ -999,6 +1013,17 @@ buttonCancelarModalDeck: {
   margin: 5,
 
 },
+touchableShop:{
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+textTouchableShop:{
+  fontSize: 20,
+  color: '#000000',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontFamily: 'Fredericka-the-Great',
+}
  
  
 });
@@ -1176,16 +1201,19 @@ return(
                     <ScrollView style={styles.scrollCards}>
                         <View style={styles.viewScrollCards}>
                          
-                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack1()}>
+                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack1()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack1} />
+                              <Text style={styles.textTouchableShop}>$ 100</Text>
                           </TouchableOpacity>
 
-                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack2()}>
+                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack2()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack2} />
+                              <Text style={styles.textTouchableShop}>$ 100</Text>
                           </TouchableOpacity>
 
-                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack3()}>
+                          <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack3()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack3} />
+                              <Text style={styles.textTouchableShop}>$ 100</Text>
                           </TouchableOpacity>
                    
 

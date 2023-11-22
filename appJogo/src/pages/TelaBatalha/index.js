@@ -512,6 +512,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
       },
+      textoFim:{
+        fontSize: 20,
+        marginBottom: 15,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontFamily: 'Fredericka-the-Great',
+
+      }
       
      
         
@@ -546,6 +555,7 @@ function Conteudo(){
     const [vidaJogador, setVidaJogador] = useState(0);
     const [vidaNPC, setvidaNPC] = useState(0)
     const [roadasJogo, setRodadasJogo] = useState(1)
+    const [textoVitoria, setTextoVitoria] = useState('')
 
     if (roadasJogo == 1){
       shuffleArrayNpc(deckNPC)
@@ -732,6 +742,7 @@ function Conteudo(){
             if(cartasDestruidasJogador > cartasDestruidasNpc){
 
                 setTextResultadoFinal('Vitória')
+                setTextoVitoria('Você ganhou $100 ')
                 styles.modalTextResultadoFinal = {
                  color: '#ffd700',
                  fontSize: 70,
@@ -743,6 +754,7 @@ function Conteudo(){
             else if(cartasDestruidasJogador < cartasDestruidasNpc){
 
                 setTextResultadoFinal('Derrota')
+                setTextoVitoria('Você ganhou $0 ')
                 styles.modalTextResultadoFinal = {
                   color: '#ff0000',
                   fontSize: 70,
@@ -753,6 +765,7 @@ function Conteudo(){
             else{
 
                 setTextResultadoFinal('Empate')
+                setTextoVitoria('Você ganhou $50 ')
                 styles.modalTextResultadoFinal = {
                   color: '#007fff',
                   fontSize: 70,
@@ -1117,9 +1130,11 @@ function Conteudo(){
 
                                     <View style={styles.modalViewFimBottom}>
 
+                                      <Text style={styles.textoFim}>{textoVitoria}</Text>
+
                                             <TouchableOpacity
                                               style={[styles.buttonCancelarModal]}
-                                              onPress={() => navigation.navigate('Home')}>
+                                              onPress={() => navigation.navigate('TelaNavegacao')}>
                                               <Text style={styles.textStyleButtonModal}>Fechar</Text>
                                             </TouchableOpacity>
 

@@ -125,9 +125,10 @@ function Cadastro(){
     const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif') 
     const [isChecked, setChecked] = useState(false);
     const [opacityBotao, setOpacityBotao] = useState(0.5);
-    let inputName
-    let inputEmail
-    let inputSenha
+
+    const [inputName, setInputName] = useState('')
+    const [inputEmail, setInputEmail] = useState('')
+    const [inputSenha, setInputSenha] = useState('')
 
     const mudarCheckbox = (value) => {
         setChecked(value);
@@ -160,6 +161,8 @@ return(
             multiline= {false}
             style={styles.input}
             value={inputName}
+            onChangeText={(text) => setInputName(text)}
+      
            />
 
         <Text style={styles.textoEmail}>Digite seu Email:</Text>
@@ -171,6 +174,8 @@ return(
             multiline= {false}
             style={styles.input}
             value={inputEmail}
+            onChangeText={(text) => setInputEmail(text)}
+         
            />
        
 
@@ -185,6 +190,8 @@ return(
             multiline= {false}
             style={styles.input}
             value={inputSenha}
+            onChangeText={(text) => setInputSenha(text)}
+        
            />
        
       
@@ -210,9 +217,9 @@ return(
 
 
 
-                        <TouchableOpacity style={[styles.botaoCadastrar,{opacity: opacityBotao }]} activeOpacity={0.5}>
+                        <TouchableOpacity style={[styles.botaoCadastrar,{opacity: opacityBotao }]} activeOpacity={0.5} onPress={pegarInputs}>
                         <Text style={styles.txtBtnCadastar}>Confirmar</Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
                     
 
         {/* <TouchableOpacity style={styles.botaoCadastrar} disabled={!isChecked} activeOpacity={isChecked ? 0.5 : 1}>
@@ -230,5 +237,14 @@ return(
 
 
 )
+
+function pegarInputs(){
+
+    console.log(inputName)
+    console.log(inputEmail)
+    console.log(inputSenha)
+
+
+}
 
 }
