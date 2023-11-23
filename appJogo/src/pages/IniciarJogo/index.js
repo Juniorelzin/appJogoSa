@@ -275,7 +275,9 @@ function Conteudo(){
     const starterDeck2 = require('../../../assets/imagens/imagensAssets/deck_Abertura2.png')
     const starterDeck3 = require('../../../assets/imagens/imagensAssets/deck_Abertura3.png')
     const route = useRoute();
-    const nomeJogador = route.params.inputName;
+    // const nomeJogador = route.params.inputName;
+    const jogador = route.params.jogador;
+    console.log(jogador[0].nome)
 
     const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
     const [imageIconDef, setimageIconDef] = useState(require('../../../assets/imagens/imagensAssets/iconDef.png'))
@@ -286,9 +288,10 @@ function Conteudo(){
 
     const escolherDeck = () => {
 
-        let userDeck = modalContent
-        let userName = nomeJogador
-        navigation.navigate('TelaNavegacao', { userDeck: userDeck, userName: userName })
+        // let userDeck = modalContent
+        jogador[0].deckAtual = modalContent
+        console.log()
+        navigation.navigate('TelaNavegacao', { jogador: jogador})
         
         setModalVisible(false)
       };
@@ -315,7 +318,7 @@ function Conteudo(){
         <View style={styles.container}>
           <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <View style={styles.viewTop}>
-              <Text style={styles.h1Text}>Olá {nomeJogador}</Text>
+              <Text style={styles.h1Text}>Olá {jogador[0].nome}</Text>
               <Text style={styles.txtText}>Escolha um deck inicial para começar:</Text>
             </View>
     

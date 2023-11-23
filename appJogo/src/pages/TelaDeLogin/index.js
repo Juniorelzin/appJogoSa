@@ -125,11 +125,17 @@ function TelaPrincipal(){
     const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
     const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo2.png')
     const [inputName, setInputName] = useState('');
+
+
+    let jogador = [
+        {nome: inputName, email:'' ,senha:'' ,dinheiro: 100, deckAtual: '', inventario: ''}
+    ]
     let inputSenha
 
     function fazerLogin(){
 
-        navigation.navigate('IniciarJogo', {inputName: inputName})
+        navigation.navigate('IniciarJogo', {jogador: jogador})
+        console.log(jogador)
 
 
 

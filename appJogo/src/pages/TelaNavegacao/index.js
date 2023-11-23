@@ -43,30 +43,35 @@ let vetorFalasVendedor = [
 ]
 let indiceFala
 
+let jogadorLogado = 0
+let userName
 let userDeck
-
+let dinheiroJogador
 let inventario = [
-  {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
-  {image: require('../../../assets/imagens/esqueletos/esqueleto1.jpg') ,nome: 'Kinigit', atk: 1800, def: 1800, mag: 4, vel: 7, esp: 12},
-  {image: require('../../../assets/imagens/esqueletos/esqueleto2.jpg') ,nome: 'Horghost', atk: 1900, def: 1600, mag: 6, vel: 7, esp: 13},
-  {image: require('../../../assets/imagens/esqueletos/esqueleto3.jpg') ,nome: 'Berserk', atk: 2000, def: 1500, mag: 3, vel: 4, esp: 14},
-  {image: require('../../../assets/imagens/esqueletos/esqueleto4.jpg') ,nome: 'Escorpileto', atk: 1800, def: 1700, mag: 5, vel: 3, esp: 12},
-  {image: require('../../../assets/imagens/esqueletos/esqueleto5.jpg') ,nome: 'Corvicrow', atk: 1700, def: 1600, mag: 5, vel: 7, esp: 12},
-  {image: require('../../../assets/imagens/goblins/goblin0.jpg') ,nome: 'Zigore', atk: 2000, def: 1800, mag: 3, vel: 6, esp: 13},
-  {image: require('../../../assets/imagens/goblins/goblin1.jpg') ,nome: 'Archit', atk: 1800, def: 1500, mag: 3, vel: 7, esp: 11},
-  {image: require('../../../assets/imagens/goblins/goblin2.jpg') ,nome: 'Brutehog', atk: 2100, def: 1600, mag: 4, vel: 5, esp: 13},
-  {image: require('../../../assets/imagens/goblins/goblin3.jpg') ,nome: 'Sprigs', atk: 1600, def: 1600, mag: 5, vel: 6, esp: 14},
-  {image: require('../../../assets/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
-  {image: require('../../../assets/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
 ]
+
+
 
 
 export default function TelaNavegacao(){
 
-    const route = useRoute();
-    userDeck = route.params.userDeck;
-    const userName = route.params.userName;
-    let dinheiroJogador = 100
+ 
+    console.log(jogadorLogado)
+
+   
+    
+    if(jogadorLogado == 0){
+      const route = useRoute();
+      console.log(jogadorLogado)
+      jogadorLogado = []
+      jogadorLogado = route.params.jogador[0]
+      userDeck = jogadorLogado.deckAtual;
+      userName = jogadorLogado.nome;
+      dinheiroJogador = jogadorLogado.dinheiro
+      console.log(jogadorLogado)
+
+    }
+
 
     const[conteudoFeed, setConteudoFeed] = useState(<TelaMapa />);
     const[iconMap, setIconMap] = useState(require('../../../assets/imagens/imagensAssets/iconeMap.png'));
@@ -537,8 +542,8 @@ const styles = StyleSheet.create({
       elevation: 5,
     },
     buttonModalShop: {
-      height: 50,
-      width: 120,
+      height: 45,
+      width: 110,
       backgroundColor: 'white',
       borderRadius: 25,
       display: 'flex',
@@ -552,8 +557,8 @@ const styles = StyleSheet.create({
      
     },
     buttonEscolherModalShop: {
-        height: 50,
-        width: 150,
+        height: 45,
+        width: 140,
         backgroundColor: '#3399cc',
         borderRadius: 25,
         display: 'flex',
@@ -1023,7 +1028,21 @@ textTouchableShop:{
   fontWeight: 'bold',
   textAlign: 'center',
   fontFamily: 'Fredericka-the-Great',
-}
+},
+modalViewTextAviso:{
+  height: '20%',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+  margin: 3
+
+},
+modalViewbutton:{
+  height: '80%',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
+} 
  
  
 });
@@ -1033,9 +1052,7 @@ function TelaMapa(){
 
 const navigation = useNavigation();
 
-const route = useRoute();
-userDeck = route.params.userDeck;
-const userName = route.params.userName;
+
 
 
 const [modalVisible, setModalVisible] = useState(false);
@@ -1107,7 +1124,7 @@ return(
 
                                     <TouchableOpacity
                                         style={[styles.BotaoBatalharModal]}
-                                        onPressIn={() => navigation.navigate('TelaBatalha', { userDeck: userDeck, userName: userName, npcDeck: modalConteudo.deck, npcName: modalConteudo.nome })}
+                                        onPressIn={() => navigation.navigate('TelaBatalha', { jogadorLogado: jogadorLogado, npcDeck: modalConteudo.deck, npcName: modalConteudo.nome })}
                                         onPressOut={() => setModalVisible(!modalVisible)}>
                                         <Text style={styles.textoBotaoBatalharModal}>Batalhar</Text>
                                     </TouchableOpacity>
@@ -1156,6 +1173,8 @@ function batalha3(){
 function TelaShop(){
   const [modalVisible, setModalVisible] = useState(false)
   const [modalContent, setModalContent] = useState()
+  const [modalVisibleShop, setModalVisibleShop] = useState(false)
+  const [statsCardShop, setStatsCardShop] = useState(0)
  
   const [textoVendedor1, setTextoVendedor1] = useState(vetorFalasVendedor[indiceFala].fala1);
   const [textoVendedor2, setTextoVendedor2] = useState(vetorFalasVendedor[indiceFala].fala2);
@@ -1171,10 +1190,14 @@ function TelaShop(){
     const [imageIconMag, setimageIconMag] = useState(require('../../../assets/imagens/imagensAssets/iconMag.png'))
     const [imageIconVel, setimageIconVel] = useState(require('../../../assets/imagens/imagensAssets/iconVel.png'))
     const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
+
+    const [avisoModal, setAvisoModal] = useState()
   
 
   const imageShop = require('../../../assets/imagens/imagensAssets/imagemVendedor.png')
   const imageFundoModal = ('../../../assets/imagens/imagensAssets/fundo_modal.jpg')
+
+  const custocarta1 = 100
 
 return(
   <View style={styles.container}>
@@ -1203,17 +1226,17 @@ return(
                          
                           <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack1()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack1} />
-                              <Text style={styles.textTouchableShop}>$ 100</Text>
+                              <Text style={styles.textTouchableShop}>$ {custocarta1}</Text>
                           </TouchableOpacity>
 
                           <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack2()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack2} />
-                              <Text style={styles.textTouchableShop}>$ 100</Text>
+                              <Text style={styles.textTouchableShop}>$ {custocarta1}</Text>
                           </TouchableOpacity>
 
                           <TouchableOpacity activeOpacity={ 0.7 } onPress={() => abrirPack3()} style={styles.touchableShop}>
                               <Image style={styles.stylePacks} source={imagemPack3} />
-                              <Text style={styles.textTouchableShop}>$ 100</Text>
+                              <Text style={styles.textTouchableShop}>$ {custocarta1}</Text>
                           </TouchableOpacity>
                    
 
@@ -1327,8 +1350,17 @@ return(
                   </View>
 
                   <View style={styles.viewButtonModalShop}>
+                    <View style={styles.modalViewTextAviso}>
+
+                        <Text style={{color: '#ff0000', fontFamily: 'Fredericka-the-Great', fontSize: 20,  fontWeight: 'bold',}}>{avisoModal}</Text>
+
+                    </View>
+                      <View style={styles.modalViewbutton}>
+
+
                         <TouchableOpacity
                           style={[styles.buttonEscolherModalShop]}
+                          onPress={verificarCompra}
                    
                         >
                           <Text style={styles.textStyleEscolherModalShop}>Comprar</Text>
@@ -1336,10 +1368,12 @@ return(
 
                         <TouchableOpacity
                           style={[styles.buttonModalShop, styles.buttonCloseModalShop]}
-                          onPress={() => setModalVisible(!modalVisible)}
+                          onPress={fecharModal}
                         >
                           <Text style={styles.textStyleModalShop}>Fechar</Text>
                         </TouchableOpacity>
+
+                        </View>
 
                       </View>
                   
@@ -1352,10 +1386,154 @@ return(
             
           </View>
 
+          <View style={styles.centeredViewModalDeck}>
+        
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisibleShop}
+            onRequestClose={() => {
+              setModalVisibleShop(!modalVisibleShop);
+            }}>
+        <View style={styles.centeredViewModalDeck}>
+            <View style={styles.modalViewDeck}>
+            <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                
+
+                <View style={styles.modalViewAllDeck}>
+
+                  <View style={styles.modalViewTextDeck}>
+
+                      <Text style={styles.modalTextDeck}>Você ganhou: </Text>
+
+                  </View>
+
+                  <View style={styles.modalViewCardDeck}>
+
+                      <Image style={styles.imageCardImageDeck} source={statsCardShop.image}/>
+                      <Text style={styles.textNomeCardDeck}>{statsCardShop.nome}</Text>
+
+                  </View>
+
+                  <View style={styles.modalViewStatsAllDeck}>
+
+                  <View style={styles.modalViewStats1Deck}>
+
+
+                      <View style={styles.viewIStatsAtkDeck}>
+                     
+                       <View  style={styles.viewEspacamento}>
+                          <View style={styles.viewIconStatsDeck}>
+                          <Image style={styles.imageIconStats1Deck}source={imageIconAtk}/>
+                          </View>
+                          <View style={styles.viewTextStatsDeck}>
+                        <Text style={styles.textStyleDeck}>ATAQUE</Text>
+                        <Text style={styles.textStyleNumDeck}>{statsCardShop.atk}</Text>
+                         </View>
+                         </View>
+                    </View>
+
+                    
+
+                      <View style={styles.viewIStatsDefDeck}>
+                      
+                      <View  style={styles.viewEspacamento}>
+                          <View style={styles.viewIconStatsDeck}>
+                          <Image style={styles.imageIconStats1Deck}source={imageIconDef}/>
+                          </View>
+                          <View style={styles.viewTextStatsDeck}>
+                        <Text style={styles.textStyleDeck}>DEFESA</Text>
+                        <Text style={styles.textStyleNumDeck}>{statsCardShop.def}</Text>
+                         </View>
+                         </View>
+                    </View>
+
+
+
+                    <View style={styles.viewIStatsMagDeck}>
+                     
+                    <View  style={styles.viewEspacamento}>
+                          <View style={styles.viewIconStatsDeck}>
+                          <Image style={styles.imageIconStats1Deck}source={imageIconMag}/>
+                          </View>
+                          <View style={styles.viewTextStatsDeck}>
+                        <Text style={styles.textStyleDeck}>MAGIA</Text>
+                        <Text style={styles.textStyleNumDeck}>{statsCardShop.mag}</Text>
+                         </View>
+                         </View>
+                    </View>
+
+
+                  </View>
+
+                  <View style={styles.modalViewStats2Deck}>
+
+                    <View style={styles.viewIStatsVelDeck}>
+                    
+                    <View  style={styles.viewEspacamento}>
+                          <View style={styles.viewIconStatsDeck}>
+                          <Image style={styles.imageIconStats2Deck}source={imageIconVel}/>
+                          </View>
+                          <View style={styles.viewTextStatsDeck}>
+                        <Text style={styles.textStyleDeck}>VELOCIDADE</Text>
+                        <Text style={styles.textStyleNumDeck}>{statsCardShop.vel}</Text>
+                         </View>
+                         </View>
+                    </View>
+
+
+
+                    <View style={styles.viewIStatsEspDeck}>
+                   
+                    <View  style={styles.viewEspacamento}>
+                          <View style={styles.viewIconStatsDeck}>
+                          <Image style={styles.imageIconStats2Deck}source={imageIconEsp}/>
+                          </View>
+                          <View style={styles.viewTextStatsDeck}>
+                        <Text style={styles.textStyleDeck}>ESPECIAL</Text>
+                        <Text style={styles.textStyleNumDeck}>{statsCardShop.esp}</Text>
+                         </View>
+                         </View>
+                    </View>
+
+                  </View>
+
+                  </View>
+
+                  <View style={styles.modalViewButtonDeck}>
+
+
+                  <View style={styles.modalViewTextAviso}>
+                  
+                  </View>
+                  <View style={styles.modalViewbutton}>
+
+                      <TouchableOpacity
+                        style={[styles.buttonCancelarModalDeck]}
+                        onPress={() => setModalVisibleShop(!modalVisibleShop)}>
+                        <Text style={styles.textStyleButtonModalDeck}>Fechar</Text>
+                      </TouchableOpacity>
+                      </View>
+                  </View>    
+
+                </View>
+              </ImageBackground>
+            </View>
+        </View>
+        </Modal>
+    </View>
+
+          
+
   </View>     
 
 )
 
+function fecharModal(){
+  setModalVisible(!modalVisible)
+  setAvisoModal('')
+
+}
 function abrirPack1(){
   setModalContent(deck_esqueletos);
   setModalVisible(true)
@@ -1371,6 +1549,29 @@ function abrirPack3(){
   setModalVisible(true)
 
 }
+function verificarCompra(){
+  if(dinheiroJogador < custocarta1){
+
+      setAvisoModal('Dinheiro insuficiente')
+      console.log(dinheiroJogador)
+  }else{
+
+
+        dinheiroJogador = dinheiroJogador - custocarta1
+        console.log(dinheiroJogador)
+      const sortearItem = () => {
+      const indiceAleatorio = Math.floor(Math.random() * modalContent.length);
+      return modalContent[indiceAleatorio];
+    };
+      const itemSorteado = sortearItem();
+      console.log('Item sorteado:', itemSorteado);
+      inventario.push(itemSorteado)
+      setStatsCardShop(itemSorteado)
+      setModalVisibleShop(!modalVisibleShop)
+      setModalVisible(!modalVisible)
+
+  }
+}
 
 }
 
@@ -1380,6 +1581,9 @@ function TelaDeck(){
   const [statsCardDeck, setStatsCardDeck] = useState(0);
 
   const [textoBtnTrocarCarta, setTextoBtnTrocarCarta] = useState()
+  const [textoMaisCartas, setTextoMaisCartas] = useState()
+  
+  
 
 
 
@@ -1490,6 +1694,7 @@ function TelaDeck(){
       
 
       <View style={styles.centeredViewModalDeck}>
+        
                     <Modal
                         animationType="slide"
                         transparent={true}
@@ -1608,9 +1813,14 @@ function TelaDeck(){
 
                               <View style={styles.modalViewButtonDeck}>
 
+
+                              <View style={styles.modalViewTextAviso}>
+                                      <Text style={{color: '#ff0000', fontFamily: 'Fredericka-the-Great', fontSize: 20,  fontWeight: 'bold',}}>{textoMaisCartas}</Text>
+                              </View>
+                              <View style={styles.modalViewbutton}>
                                   <TouchableOpacity
                                     style={[styles.buttonTrocarModalDeck]}
-                                    onPress={() => VerificarTRoca()}>
+                                    onPress={() => VerificarTroca()}>
                                     <Text style={styles.textStyleButtonModalDeck}>{textoBtnTrocarCarta}</Text>
                                   </TouchableOpacity>
 
@@ -1619,7 +1829,7 @@ function TelaDeck(){
                                     onPress={() => setModalVisibleDeck(!modalVisibleDeck)}>
                                     <Text style={styles.textStyleButtonModalDeck}>Fechar</Text>
                                   </TouchableOpacity>
-
+                                  </View>
                               </View>    
 
                             </View>
@@ -1635,18 +1845,31 @@ function TelaDeck(){
 
 
   )
-  function VerificarTRoca()
-  
-  {
+  function VerificarTroca(){
+
+    let posicaoCarta = userDeck.indexOf(statsCardDeck)
 
     if(textoBtnTrocarCarta == '=> Inventário'){
 
-      console.log('ola')
+      setTextoMaisCartas('')
+      userDeck.splice(posicaoCarta,1)
+      inventario.push(statsCardDeck)
+      setModalVisibleDeck(!modalVisibleDeck)
+     
 
     }else if(textoBtnTrocarCarta == '=> Deck'){
 
-      console.log('hope')
+      if(userDeck.length >= 6){
 
+        setTextoMaisCartas('Seu deck tem mais de 6 cartas')
+
+      }else{
+        setTextoMaisCartas('')
+          inventario.splice(posicaoCarta,1)
+          userDeck.push(statsCardDeck)
+          setModalVisibleDeck(!modalVisibleDeck)
+      }
+     
     }
 
 

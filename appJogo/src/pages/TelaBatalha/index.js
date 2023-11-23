@@ -32,12 +32,30 @@ let deck_goblins = [
 let deckNPC = []
 let deckAtualPlayer = []
 
+    let jogador
+    let jogadorLogado 
+    let userDeck 
+    let userName 
+    let npcDeck 
+    let npcName
+    let dinheiroJogador 
+
   
 
 
 
 
 export default function TelaBatalha(){
+
+  const navigation = useNavigation()
+  const route = useRoute();
+  jogadorLogado = route.params.jogadorLogado
+  userDeck = jogadorLogado.deckAtual;
+  userName = jogadorLogado.nome;
+  dinheiroJogador = jogadorLogado.dinheiro
+  npcDeck = route.params.npcDeck;
+  npcName = route.params.npcName;
+
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
     const fadeAnim = useRef(new Animated.Value(0)).current
@@ -533,19 +551,13 @@ const styles = StyleSheet.create({
 
 function Conteudo(){
 
+  const navigation = useNavigation();
+
     // if (!deckNPC.length) {
     //     sortearDeck();
     // }
   
    
-
-    const navigation = useNavigation()
-    const route = useRoute();
-    const userDeck = route.params.userDeck;
-    const userName = route.params.userName;
-    const npcDeck = route.params.npcDeck;
-    const npcName = route.params.npcName;
-
     deckAtualPlayer = userDeck
     deckNPC = npcDeck
     
@@ -743,6 +755,14 @@ function Conteudo(){
 
                 setTextResultadoFinal('Vitória')
                 setTextoVitoria('Você ganhou $100 ')
+                dinheiroJogador = dinheiroJogador + 100
+                jogadorLogado.dinheiro = dinheiroJogador
+                jogador = jogadorLogado
+                console.log(jogadorLogado)
+                console.log(jogador)
+
+
+
                 styles.modalTextResultadoFinal = {
                  color: '#ffd700',
                  fontSize: 70,
@@ -804,7 +824,7 @@ function Conteudo(){
 
                         <View style={styles.viewRightNpc}>
                      
-                            <Text style={styles.nomejogador}>Jogador 2</Text>
+                            <Text style={styles.nomejogador}>{npcName}</Text>
                             <Text style={styles.pontos}>Cartas Destruidas: </Text>
                             <Text style={styles.pontos}>{vidaNPC}</Text>
                     
@@ -1134,7 +1154,7 @@ function Conteudo(){
 
                                             <TouchableOpacity
                                               style={[styles.buttonCancelarModal]}
-                                              onPress={() => navigation.navigate('TelaNavegacao')}>
+                                              onPress={() => navigation.navigate('TelaNavegacao', {jogador: jogador})}>
                                               <Text style={styles.textStyleButtonModal}>Fechar</Text>
                                             </TouchableOpacity>
 
