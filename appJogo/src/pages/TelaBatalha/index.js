@@ -33,7 +33,7 @@ let deckNPC = []
 let deckAtualPlayer = []
 
     let jogador
-    let jogadorLogado 
+    let jogadorLogadoPartida
     let userDeck 
     let userName 
     let npcDeck 
@@ -49,12 +49,13 @@ export default function TelaBatalha(){
 
   const navigation = useNavigation()
   const route = useRoute();
-  jogadorLogado = route.params.jogadorLogado
-  userDeck = jogadorLogado.deckAtual;
-  userName = jogadorLogado.nome;
-  dinheiroJogador = jogadorLogado.dinheiro
+  jogadorLogadoPartida = route.params.jogadorLogado
+  userDeck = jogadorLogadoPartida.deckAtual;
+  userName = jogadorLogadoPartida.nome;
+  dinheiroJogador = jogadorLogadoPartida.dinheiro
   npcDeck = route.params.npcDeck;
   npcName = route.params.npcName;
+  console.log(jogadorLogadoPartida)
 
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
@@ -756,9 +757,10 @@ function Conteudo(){
                 setTextResultadoFinal('Vitória')
                 setTextoVitoria('Você ganhou $100 ')
                 dinheiroJogador = dinheiroJogador + 100
-                jogadorLogado.dinheiro = dinheiroJogador
-                jogador = jogadorLogado
-                console.log(jogadorLogado)
+                jogadorLogadoPartida.dinheiro = dinheiroJogador
+                jogadorLogadoPartida.batalha = true
+                jogador = jogadorLogadoPartida
+                console.log(jogadorLogadoPartida)
                 console.log(jogador)
 
 

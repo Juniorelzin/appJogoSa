@@ -129,7 +129,7 @@ return(
 
            
             <TouchableOpacity style={styles.botaoIniciar} onPress={ () => navigation.navigate('TelaDeLogin')}>
-            <Text style={[styles.textoBotao]}>Iniciar Demo</Text>
+            <Text style={[styles.textoBotao]}>Iniciar</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.botaoCadastrar} onPress={ () => navigation.navigate('CadastrarUsuario')}>

@@ -4,6 +4,8 @@ import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from 'expo-checkbox';
 
+import server from '../servidor/index.js'
+
 export default function CadastrarUsuario(){
 
 
@@ -135,6 +137,27 @@ function Cadastro(){
         setOpacityBotao(value ? 1 : 0.5);
       };
 
+
+      const cadastrar = async () => {
+        try {
+            const data = await server.post('/user/new', {
+                name: inputName,
+                email: inputEmail,
+                password: inputSenha,
+                
+            });
+            if (data.status === 200) {
+                console.log(data)
+                alert(data.data.message)
+                navigation.navigate('TelaDeLogin')
+            } else {
+                console.log(data)
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 return(
 
         <View style={styles.container}>
@@ -217,7 +240,7 @@ return(
 
 
 
-                        <TouchableOpacity style={[styles.botaoCadastrar,{opacity: opacityBotao }]} activeOpacity={0.5} onPress={pegarInputs}>
+                        <TouchableOpacity style={[styles.botaoCadastrar,{opacity: opacityBotao }]} activeOpacity={0.5} onPress={pegarInputs} disabled={!isChecked}>
                         <Text style={styles.txtBtnCadastar}>Confirmar</Text>
                         </TouchableOpacity>
                     
@@ -243,6 +266,8 @@ function pegarInputs(){
     console.log(inputName)
     console.log(inputEmail)
     console.log(inputSenha)
+
+    cadastrar()
 
 
 }

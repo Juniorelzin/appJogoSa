@@ -60,7 +60,7 @@ export default function TelaNavegacao(){
 
    
     
-    if(jogadorLogado == 0){
+    if(jogadorLogado == 0 ){
       const route = useRoute();
       console.log(jogadorLogado)
       jogadorLogado = []
@@ -68,6 +68,7 @@ export default function TelaNavegacao(){
       userDeck = jogadorLogado.deckAtual;
       userName = jogadorLogado.nome;
       dinheiroJogador = jogadorLogado.dinheiro
+      jogadorLogado.batalha = false
       console.log(jogadorLogado)
 
     }
@@ -1847,10 +1848,10 @@ function TelaDeck(){
   )
   function VerificarTroca(){
 
-    let posicaoCarta = userDeck.indexOf(statsCardDeck)
+    
 
     if(textoBtnTrocarCarta == '=> Inventário'){
-
+      let posicaoCarta = userDeck.indexOf(statsCardDeck)
       setTextoMaisCartas('')
       userDeck.splice(posicaoCarta,1)
       inventario.push(statsCardDeck)
@@ -1864,10 +1865,12 @@ function TelaDeck(){
         setTextoMaisCartas('Seu deck tem mais de 6 cartas')
 
       }else{
-        setTextoMaisCartas('')
+        let posicaoCarta = inventario.indexOf(statsCardDeck)
+          setTextoMaisCartas('')
           inventario.splice(posicaoCarta,1)
           userDeck.push(statsCardDeck)
           setModalVisibleDeck(!modalVisibleDeck)
+         
       }
      
     }

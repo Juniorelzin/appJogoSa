@@ -128,7 +128,7 @@ function TelaPrincipal(){
 
 
     let jogador = [
-        {nome: inputName, email:'' ,senha:'' ,dinheiro: 100, deckAtual: '', inventario: ''}
+        {nome: inputName, email:'' ,senha:'' ,dinheiro: 100, deckAtual: '', inventario: '', batalha: false }
     ]
     let inputSenha
 
