@@ -151,9 +151,11 @@ function Cadastro(){
                 alert(data.data.message)
                 navigation.navigate('TelaDeLogin')
             } else {
+                console.log('200000000')
                 console.log(data)
             }
         } catch (err) {
+            console.log('100000000')
             console.log(err);
         }
     }
@@ -213,6 +215,7 @@ return(
             multiline= {false}
             style={styles.input}
             value={inputSenha}
+            secureTextEntry={true}
             onChangeText={(text) => setInputSenha(text)}
         
            />

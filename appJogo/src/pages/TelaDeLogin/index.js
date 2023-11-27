@@ -173,6 +173,7 @@ function TelaPrincipal(){
                             multiline= {false}
                             style={styles.input}
                             value={inputSenha}
+                            secureTextEntry={true}
                             />
 
 
