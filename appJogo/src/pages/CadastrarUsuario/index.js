@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput} from "react-native";
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Modal} from "react-native";
 import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from 'expo-checkbox';
@@ -118,12 +118,77 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth:5,
+        borderColor:'red'
+      },
+      modalView: {
+        height: '60%',
+        width: '90%',
+        borderRadius:25,
+        backgroundColor: 'white', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth:5,
+        borderColor:'green',
+        shadowColor: '#000',
+        shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      },
+      button: {
+        height: 50,
+        width: 150,
+        backgroundColor: '#3399cc',
+        borderRadius: 25,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#171717',
+        shadowOffset: {width: 3, height: 5},
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+      },
+      textStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        fontFamily: 'Fredericka-the-Great',
+        fontSize: 20,
+      },
+      modalText: {
+        fontSize: 30,
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontFamily: 'Fredericka-the-Great',
+      },
+      fundoModal:{
+        height: '100%',
+        width: '100%',  
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:25,
+        borderWidth:5,
+        borderColor:'blue',
+
+    },
 })
 
 
 
 function Cadastro(){
     const navigation = useNavigation();
+
+    const [modalVisible, setModalVisible] = useState(false)
+
     const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif') 
     const [isChecked, setChecked] = useState(false);
     const [opacityBotao, setOpacityBotao] = useState(0.5);
@@ -148,8 +213,8 @@ function Cadastro(){
             });
             if (data.status === 200) {
                 console.log(data)
-                alert(data.data.message)
-                navigation.navigate('TelaDeLogin')
+                setModalVisible(!modalVisible)
+                
             } else {
                 console.log('200000000')
                 console.log(data)
@@ -254,7 +319,32 @@ return(
 
         </View>
 
-        </ImageBackground>   
+        </ImageBackground>
+        
+            <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+              
+                setModalVisible(!modalVisible);
+                }}>
+                <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                    <Text style={styles.modalText}>Cadastro efetuado!</Text>
+                <TouchableOpacity
+                    style={[styles.button]}
+                    onPress={direcionarTela}>
+                    <Text style={styles.textStyle}>Fechar</Text>
+                    </TouchableOpacity>
+                </ImageBackground>
+                </View>
+                
+                </View>
+            </Modal>
+            </View>   
    
 </View>
 
@@ -272,6 +362,11 @@ function pegarInputs(){
 
     cadastrar()
 
+
+}
+function direcionarTela(){
+    setModalVisible(!modalVisible)
+    navigation.navigate('TelaDeLogin')
 
 }
 

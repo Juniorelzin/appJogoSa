@@ -1,86 +1,88 @@
 import React from "react";
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, TextInput} from "react-native";
-import {useState} from 'react';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from "react-native";
+import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 
+import server from '../servidor/index.js'
 
 
 
-export default function TelaDeLogin(){
 
-    const[conteudoFeed, setConteudoFeed] = useState(<TelaPrincipal />);
+export default function TelaDeLogin() {
 
-    return(
+    const [conteudoFeed, setConteudoFeed] = useState(<TelaPrincipal />);
+
+    return (
         <View style={styles.container}>
 
-       
-        {conteudoFeed}
-        
-          
+
+            {conteudoFeed}
+
+
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000000',
-       
-       
-        
+
+
+
     },
-    image:{
+    image: {
         height: '100%',
         width: '100%',
         justifyContent: 'center',
-        
+
     },
     logo: {
         alignItems: 'center',
         width: 300,
         height: 300,
         objectFit: 'fill',
-       
+
     },
-    viewTop:{
+    viewTop: {
         height: '50%',
         width: '100%',
         alignItems: 'center',
-      
-             
+
+
 
     },
-    viewMiddle:{
+    viewMiddle: {
         height: '25%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-      
+
 
     },
-    viewBottom:{
+    viewBottom: {
         height: '25%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-       
+
     },
-    textoNome:{
+    textoNome: {
         color: '#ffffff',
         fontSize: 25,
         fontFamily: 'Cabin-Sketch-Regular',
-       
-        
+
+
     },
-    textoSenha:{
+    textoSenha: {
         color: '#ffffff',
         fontSize: 25,
         fontFamily: 'Cabin-Sketch-Regular',
     },
-    input:{
+    input: {
         height: '20%',
         width: '50%',
         backgroundColor: '#ffffff',
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#171717',
-        shadowOffset: {width: 3, height: 5},
+        shadowOffset: { width: 3, height: 5 },
         shadowOpacity: 0.6,
         shadowRadius: 3,
     },
@@ -117,92 +119,113 @@ const styles = StyleSheet.create({
 
 
     },
-  
+
 })
 
-function TelaPrincipal(){
+function TelaPrincipal() {
     const navigation = useNavigation();
     const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
     const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo2.png')
     const [inputName, setInputName] = useState('');
+    const [inputSenha, setInputSenha] = useState('');
 
 
-    let jogador = [
-        {nome: inputName, email:'' ,senha:'' ,dinheiro: 100, deckAtual: '', inventario: '', batalha: false }
-    ]
-    let inputSenha
+    let jogador = []
 
-    function fazerLogin(){
+    const fazerLogin = async () => {
 
-        navigation.navigate('IniciarJogo', {jogador: jogador})
-        console.log(jogador)
+        try {
+            const data = await server.post('/user/find', {
+                    name: inputName,
+                    password: inputSenha
+            });
+            if (data.status === 200) {
+                console.log(data) 
+                jogador = data.data
+                console.log(jogador)
+                if(jogador[0].name == inputName && jogador[0].password == inputSenha){
+                    console.log('Olá')
+                }else{
+                    console.log('não')
+                }
+                // navigation.navigate('iniciarJogo')
+            } else {
+                console.log('erro')
+                console.log(data)
+            }
+        } catch (err) {
+            
+            console.log(err);
+        }
+        // navigation.navigate('IniciarJogo')
+        // console.log(jogador)
 
 
 
     }
-    return(
+    return (
         <View style={styles.container}>
-    
-                <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-    
-                    <View style={styles.viewTop}>
+
+            <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+
+                <View style={styles.viewTop}>
 
                     <Image style={styles.logo}
-                            source={logo}/>
+                        source={logo} />
 
 
-                    </View>
+                </View>
 
-                     <View style={styles.viewMiddle}>
+                <View style={styles.viewMiddle}>
 
-                     <Text style={styles.textoNome}>Digite seu nome de usuário:</Text>
-                        
-                         <TextInput
+                    <Text style={styles.textoNome}>Digite seu nome de usuário:</Text>
 
-                            multiline= {false}
-                            style={styles.input}
-                            value={inputName}
-                            onChangeText={(text) => setInputName(text)}
-                            />
+                    <TextInput
 
-
-                            <Text style={styles.textoSenha}>Digite sua senha:</Text>
-                        
-                         <TextInput
-
-                            multiline= {false}
-                            style={styles.input}
-                            value={inputSenha}
-                            secureTextEntry={true}
-                            />
+                        multiline={false}
+                        style={styles.input}
+                        value={inputName}
+                        onChangeText={(text) => setInputName(text)}
+                    />
 
 
-                            <Text style={{color: '#ff0000'}}></Text>
+                    <Text style={styles.textoSenha}>Digite sua senha:</Text>
 
-                    </View>
+                    <TextInput
 
-                     <View style={styles.viewBottom}>
+                        multiline={false}
+                        style={styles.input}
+                        value={inputSenha}
+                        secureTextEntry={true}
+                        onChangeText={(text) => setInputSenha(text)}
+                    />
 
-                        <TouchableOpacity style={styles.botaoLogin} onPress={fazerLogin}>
+
+                    <Text style={{ color: '#ff0000' }}></Text>
+
+                </View>
+
+                <View style={styles.viewBottom}>
+
+                    <TouchableOpacity style={styles.botaoLogin} onPress={fazerLogin}>
                         <Text style={styles.txtBtnLogin}>Entrar</Text>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
 
-                    </View>
-                        
-                     
+                </View>
 
-    
-               
-    
-    
-    
-               
-    
-                </ImageBackground>   
-           
+
+
+
+
+
+
+
+
+
+            </ImageBackground>
+
         </View>
     )
-    }
+}
 
-    
