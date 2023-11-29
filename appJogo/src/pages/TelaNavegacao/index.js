@@ -1,9 +1,11 @@
 import React, {useRef}from "react";
 import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import { useRoute } from '@react-navigation/native';
+
+import server from '../servidor/index.js'
 
 let deck_esqueletos = [
     {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
@@ -43,36 +45,78 @@ let vetorFalasVendedor = [
 ]
 let indiceFala
 
+
 let jogadorLogado = 0
 let userName
 let userDeck
-let dinheiroJogador
+let userCash
 let inventario = [
 ]
 
 
-
-
 export default function TelaNavegacao(){
 
- 
-    console.log(jogadorLogado)
 
-   
+    const [recarregarTelaShop, setRecarregarTelaShop] = useState(false);
     
     if(jogadorLogado == 0 ){
+    
+    
       const route = useRoute();
-      console.log(jogadorLogado)
       jogadorLogado = []
-      jogadorLogado = route.params.jogador[0]
-      userDeck = jogadorLogado.deckAtual;
-      userName = jogadorLogado.nome;
-      dinheiroJogador = jogadorLogado.dinheiro
-      jogadorLogado.batalha = false
-      console.log(jogadorLogado)
+      userDeck = route.params.userDeck
+      userName = route.params.userName;
 
+    };
+
+    useEffect(() => {
+  
+      verificarBanco();
+
+    }, [userCash, recarregarTelaShop]); 
+
+    const verificarBanco = async () => {
+
+      try {
+          const data = await server.post('/user/find/player', {
+                  name: userName,
+          });
+          console.log(userName)
+          if (data.status === 200) {
+    
+              console.log(data)  
+    
+              if(userName == userName){
+    
+                 let dadosJogador = data.data
+                  userDeck = jogadorLogado.deckAtual;
+                  userCash = dadosJogador[0].cash
+                  setDinheiroJogador(userCash)
+    
+    
+              }else{
+    
+                  console.log('não')
+              }
+             
+          } else {
+             
+              console.log(data)
+              
+          }
+      } catch (err) {
+          
+          console.log(err);
+       
+      }
+    
     }
-
+    
+    
+   const recarregarTelaShopFunction = () => {
+    setRecarregarTelaShop((prev) => !prev);
+  };
+    
 
     const[conteudoFeed, setConteudoFeed] = useState(<TelaMapa />);
     const[iconMap, setIconMap] = useState(require('../../../assets/imagens/imagensAssets/iconeMap.png'));
@@ -82,9 +126,11 @@ export default function TelaNavegacao(){
     const[leftColor, setLeftColor] = useState('#000000');
     const[middleColor, setMiddleColor] = useState('#3399cc');
     const[rightColor, setRightColor] = useState('#000000');
+    
+    const[dinheiroJogador, setDinheiroJogador] = useState(0);
 
     function mostrarShop(){
-      setConteudoFeed(<TelaShop />)
+      setConteudoFeed(<TelaShop recarregarTelaShop={recarregarTelaShopFunction} />)
 
       indiceFala = Math.floor(Math.random() * vetorFalasVendedor.length)
 
@@ -166,9 +212,7 @@ export default function TelaNavegacao(){
        
 
             </View>
-       
-        
-          
+                
         </View>
         
           
@@ -1043,7 +1087,7 @@ modalViewbutton:{
   width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
-} 
+},
  
  
 });
@@ -1066,6 +1110,8 @@ const imageFundoModal = require('../../../assets/imagens/imagensAssets/fundo_mod
 const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo.png')
 
 const[imagemGoblin, setImagemGoblin] = useState(require('../../../assets/imagens/imagensAssets/imagemGoblin.jpg'));
+
+
 
 return(
     <View style={styles.container}>
@@ -1171,7 +1217,7 @@ function batalha3(){
 
 
 }
-function TelaShop(){
+function TelaShop({ recarregarTelaShop }){
   const [modalVisible, setModalVisible] = useState(false)
   const [modalContent, setModalContent] = useState()
   const [modalVisibleShop, setModalVisibleShop] = useState(false)
@@ -1199,6 +1245,10 @@ function TelaShop(){
   const imageFundoModal = ('../../../assets/imagens/imagensAssets/fundo_modal.jpg')
 
   const custocarta1 = 100
+
+  const recarregarTela = () => {
+    recarregarTelaShop();
+  };
 
 return(
   <View style={styles.container}>
@@ -1550,27 +1600,56 @@ function abrirPack3(){
   setModalVisible(true)
 
 }
-function verificarCompra(){
-  if(dinheiroJogador < custocarta1){
+async function verificarCompra() {
+  if (userCash < custocarta1) {
+    setAvisoModal('Dinheiro insuficiente');
+  } else {
+    try {
+      userCash = userCash - custocarta1;
 
-      setAvisoModal('Dinheiro insuficiente')
-      console.log(dinheiroJogador)
-  }else{
+      console.log(userCash);
 
-
-        dinheiroJogador = dinheiroJogador - custocarta1
-        console.log(dinheiroJogador)
       const sortearItem = () => {
-      const indiceAleatorio = Math.floor(Math.random() * modalContent.length);
-      return modalContent[indiceAleatorio];
-    };
+        const indiceAleatorio = Math.floor(Math.random() * modalContent.length);
+        return modalContent[indiceAleatorio];
+      };
+
       const itemSorteado = sortearItem();
       console.log('Item sorteado:', itemSorteado);
-      inventario.push(itemSorteado)
-      setStatsCardShop(itemSorteado)
-      setModalVisibleShop(!modalVisibleShop)
-      setModalVisible(!modalVisible)
+      inventario.push(itemSorteado);
+      setStatsCardShop(itemSorteado);
+      setModalVisibleShop(!modalVisibleShop);
+      setModalVisible(!modalVisible);
 
+      await atualizarCashJogador(); // Espera pela conclusão da atualização do jogador
+      console.log('Compra realizada com sucesso!');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+async function atualizarCashJogador() {
+  try {
+    const data = await server.post('/user/update/cash', {
+      name: userName,
+      newCash: userCash,
+    });
+
+    if (data.status === 200) {
+      console.log('Jogador atualizado com sucesso!');
+      console.log(userName);
+      console.log(userCash);
+      recarregarTela()
+      setTextoVendedor1('Muito')
+      setTextoVendedor2('Obrigado')
+      setTextoVendedor3('pelo Compra!!')
+     
+    } else {
+      console.log(data);
+    }
+  } catch (err) {
+    console.error(err);
   }
 }
 

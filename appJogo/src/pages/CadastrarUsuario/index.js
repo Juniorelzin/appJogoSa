@@ -122,8 +122,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth:5,
-        borderColor:'red'
       },
       modalView: {
         height: '60%',
@@ -132,8 +130,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white', 
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth:5,
-        borderColor:'green',
         shadowColor: '#000',
         shadowOffset: {
         width: 0,
@@ -146,6 +142,7 @@ const styles = StyleSheet.create({
       button: {
         height: 50,
         width: 150,
+        marginTop: 30,
         backgroundColor: '#3399cc',
         borderRadius: 25,
         display: 'flex',
@@ -176,8 +173,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius:25,
-        borderWidth:5,
-        borderColor:'blue',
+        overflow: 'hidden'
 
     },
 })

@@ -1,11 +1,9 @@
 import React from "react";
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from "react-native";
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Modal } from "react-native";
 import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 
 import server from '../servidor/index.js'
-
-
 
 
 export default function TelaDeLogin() {
@@ -119,18 +117,80 @@ const styles = StyleSheet.create({
 
 
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalView: {
+        height: '60%',
+        width: '90%',
+        borderRadius:25,
+        backgroundColor: 'white', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      },
+      button: {
+        height: 50,
+        width: 150,
+        marginTop: 30,
+        backgroundColor: '#3399cc',
+        borderRadius: 25,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#171717',
+        shadowOffset: {width: 3, height: 5},
+        shadowOpacity: 0.6,
+        shadowRadius: 3,
+      },
+      textStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        fontFamily: 'Fredericka-the-Great',
+        fontSize: 20,
+      },
+      modalText: {
+        fontSize: 30,
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontFamily: 'Fredericka-the-Great',
+      },
+      fundoModal:{
+        height: '100%',
+        width: '100%',  
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:25,
+        overflow: 'hidden'
+
+    },
 
 })
 
 function TelaPrincipal() {
     const navigation = useNavigation();
+
+    const [modalVisible, setModalVisible] = useState(false)
     const image = require('../../../assets/imagens/imagensAssets/gifChamas.gif')
     const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo2.png')
     const [inputName, setInputName] = useState('');
     const [inputSenha, setInputSenha] = useState('');
 
+    let jogador
+    const [nomeJogador, setNomeJogador] = useState('');
 
-    let jogador = []
+    
 
     const fazerLogin = async () => {
 
@@ -140,25 +200,31 @@ function TelaPrincipal() {
                     password: inputSenha
             });
             if (data.status === 200) {
+
                 console.log(data) 
                 jogador = data.data
-                console.log(jogador)
+                setNomeJogador (jogador[0].name)
+               
+
                 if(jogador[0].name == inputName && jogador[0].password == inputSenha){
-                    console.log('Olá')
+
+                    setModalVisible(!modalVisible)
+
                 }else{
+
                     console.log('não')
                 }
-                // navigation.navigate('iniciarJogo')
+               
             } else {
-                console.log('erro')
+               
                 console.log(data)
+                
             }
         } catch (err) {
             
             console.log(err);
         }
-        // navigation.navigate('IniciarJogo')
-        // console.log(jogador)
+      
 
 
 
@@ -214,18 +280,46 @@ function TelaPrincipal() {
 
                 </View>
 
-
-
-
-
-
-
-
-
-
             </ImageBackground>
+
+
+         
+        
+                <View style={styles.centeredView}>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                        }}>
+                        <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+            <               ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+                            <Text style={styles.modalText}>Login efetuado!</Text>
+                            <TouchableOpacity
+                            style={[styles.button]}
+                            onPress={direcionarTela}>
+                            <Text style={styles.textStyle}>Fechar</Text>
+                            </TouchableOpacity>
+                            </ImageBackground>
+                        </View>
+            
+                        </View>
+                    </Modal>
+                </View>  
 
         </View>
     )
+
+    function direcionarTela(){
+
+        console.log(nomeJogador)
+        setModalVisible(!modalVisible)
+        navigation.navigate('IniciarJogo', {nomeJogador: nomeJogador})
+       
+     }
 }
+
+
 

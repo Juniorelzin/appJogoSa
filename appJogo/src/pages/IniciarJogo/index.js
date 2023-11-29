@@ -1,9 +1,10 @@
 import React, {useRef}from "react";
 import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, Modal} from "react-native";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import server from '../servidor/index.js'
 
 let deck_esqueletos = [
   {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
@@ -29,13 +30,13 @@ let deck_goblins = [
   {image: require('../../../assets/imagens/goblins/goblin4.jpg') ,nome: 'Chantus', atk: 1900, def: 1700, mag: 6, vel: 4, esp: 13},
   {image: require('../../../assets/imagens/goblins/goblin5.jpg') ,nome: 'Flicts', atk: 1800, def: 1600, mag: 6, vel: 7, esp: 12},
 ] 
-let userDeck = []
+
   
 
 
 
 
-export default function TelaBatalha(){
+export default function IniciarJogo(){
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
     const fadeAnim = useRef(new Animated.Value(0)).current
@@ -275,9 +276,13 @@ function Conteudo(){
     const starterDeck2 = require('../../../assets/imagens/imagensAssets/deck_Abertura2.png')
     const starterDeck3 = require('../../../assets/imagens/imagensAssets/deck_Abertura3.png')
     const route = useRoute();
-    // const nomeJogador = route.params.inputName;
-    const jogador = route.params.jogador;
-    console.log(jogador[0].nome)
+  
+    const nomejogador = route.params.nomeJogador;
+    let dataJogador
+    let dadosJogador
+    let userDeck
+    const [dadosCarregados, setDadosCarregados] = useState(false);
+   
 
     const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
     const [imageIconDef, setimageIconDef] = useState(require('../../../assets/imagens/imagensAssets/iconDef.png'))
@@ -286,14 +291,73 @@ function Conteudo(){
     const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
 
 
-    const escolherDeck = () => {
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const data = await server.post('/user/find/player', {
+              name: nomejogador,
+            });
+    
+            if (data.status === 200) {
+              console.log(data);
+              dataJogador = data.data;
+    
+              if (nomejogador === dataJogador[0].name) {
+                dadosJogador = dataJogador[0];
+                console.log(dadosJogador);
+                console.log('ola2');
+              } else {
+                console.log('não');
+              }
+    
+              setDadosCarregados(true); // Indica que os dados foram carregados
+            } else {
+              console.log(data);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        };
+    
+        fetchData();
+      }, [nomejogador]); // Adiciona nomejogador como uma dependência para garantir que o efeito seja reexecutado quando nomejogador mudar
+    
+      // Restante do seu código ...
 
-        // let userDeck = modalContent
-        jogador[0].deckAtual = modalContent
-        console.log()
-        navigation.navigate('TelaNavegacao', { jogador: jogador})
-        
-        setModalVisible(false)
+
+      function escolherDeck() {
+        if (!dadosCarregados) {
+          // Aguarde até que os dados sejam carregados
+          console.log("Aguarde até que os dados sejam carregados.");
+          return;
+        }
+    
+     
+        userDeck = modalContent;
+        console.log(userDeck)
+        console.log(nomejogador)
+    
+        atualizarJogador();
+    
+        setModalVisible(false);
+      }
+    
+      const atualizarJogador = async () => {
+        try {
+          const data = await server.post('/user/update/deck', {
+            name: nomejogador,
+            // newDeck:userDeck,
+          });
+    
+          if (data.status === 200) {
+            console.log("Jogador atualizado com sucesso!");
+            navigation.navigate('TelaNavegacao', { userDeck: userDeck, userName: nomejogador })
+          } else {
+            console.log(data);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       };
     
       const handlePressOut = () => {
@@ -318,7 +382,7 @@ function Conteudo(){
         <View style={styles.container}>
           <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <View style={styles.viewTop}>
-              <Text style={styles.h1Text}>Olá {jogador[0].nome}</Text>
+              <Text style={styles.h1Text}>Olá {nomejogador}</Text>
               <Text style={styles.txtText}>Escolha um deck inicial para começar:</Text>
             </View>
     
