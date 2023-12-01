@@ -6,6 +6,7 @@ import Checkbox from 'expo-checkbox';
 
 import server from '../servidor/index.js'
 
+
 export default function CadastrarUsuario(){
 
 
@@ -193,13 +194,34 @@ function Cadastro(){
     const [inputEmail, setInputEmail] = useState('')
     const [inputSenha, setInputSenha] = useState('')
 
+    const [avisoName, setAvisoName] = useState('')
+    const [avisoEmail, setAvisoEmail] = useState('')
+
+    let jogador
+    const [compararName, setCompararName] = useState('')
+    const [compararEmail, setCompararEmail] = useState('')
+
+
     const mudarCheckbox = (value) => {
         setChecked(value);
         setOpacityBotao(value ? 1 : 0.5);
       };
 
+      function verificarImputs(){
+        let verificarName = inputName
+        let verificarEmail = inputEmail
+        let verificarPassword = inputSenha
 
-      const cadastrar = async () => {
+        if(verificarName == '' || verificarName == null || verificarEmail == '' || verificarEmail == null || verificarPassword == '' || verificarPassword == null){
+                    console.log('oiiiiiiii')
+        }else{
+
+            verificarNome()
+        
+        }
+
+      }
+    const cadastrar = async () => {
         try {
             const data = await server.post('/user/new', {
                 name: inputName,
@@ -221,6 +243,95 @@ function Cadastro(){
         }
     }
 
+    const verificarNome = async () => {
+
+        try {
+            const data = await server.post('/user/find/compareName', {
+                    name: inputName,
+            });
+            if (data.status === 200) {
+
+                console.log(data) 
+                jogador = data.data
+                // setCompararName(jogador.name)
+                console.log(jogador.name + 'oii')
+                console.log(inputName + 'olaa')
+
+                const esperar = async () =>{
+
+                    const nome = await(jogador.name)
+                    setCompararName(nome)
+                    console.log('caralhão')
+
+                }
+    
+                esperar()
+                
+                if(compararName == inputName){
+
+                    setAvisoName('Esse nome já esta em uso')
+                    console.log('olaaaaaa')
+                }
+                else{
+                    verificarEmail()
+                    console.log('oiiiiii')
+                }
+               
+            } else {
+               
+                console.log(data)
+                console.log('cadeeeeeeeee')
+                
+               
+                
+            }
+        } catch (err) {
+            
+            console.log(err);
+            console.log('noiiiiiiiiii')
+         
+        }
+        }
+    
+        
+            const verificarEmail = async () => {
+
+                try {
+                    const data = await server.post('/user/find/compareEmail', {
+                            email: inputEmail,
+                    });
+                    if (data.status === 200) {
+        
+                        console.log(data) 
+                        jogador = data.data
+                        setCompararEmail(jogador.email)
+                        console.log(jogador.email)
+                        console.log(inputEmail)
+                        console.log(compararEmail)
+                        console.log('caralhoooo')
+                
+                        if(compararEmail == inputEmail){
+        
+                            setAvisoEmail('Esse email já esta em uso')
+                        }
+                        else{
+                            cadastrar()
+                        }
+                       
+                    } else {
+                       
+                        console.log(data)
+                       
+                        
+                    }
+        } catch (err) {
+            
+            console.log(err);
+           
+        }
+
+    }
+
 return(
 
         <View style={styles.container}>
@@ -240,7 +351,7 @@ return(
 
         <Text style={styles.textoNome}>Escolha um nome de usuário:</Text>
         <View style={{height: '5%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color: '#ff0000'}}></Text>
+        <Text style={{color: '#ff0000'}}>{avisoName}</Text>
         </View>
         <TextInput
 
@@ -253,7 +364,7 @@ return(
 
         <Text style={styles.textoEmail}>Digite seu Email:</Text>
         <View style={{height: '5%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color: '#ff0000'}}></Text>
+        <Text style={{color: '#ff0000'}}>{avisoEmail}</Text>
         </View>
         <TextInput
 
@@ -356,7 +467,7 @@ function pegarInputs(){
     console.log(inputEmail)
     console.log(inputSenha)
 
-    cadastrar()
+    verificarImputs()
 
 
 }

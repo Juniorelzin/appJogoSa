@@ -68,6 +68,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    viewBottomTop: {
+        height: '30%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    
+    },
+    viewBottomBottom: {
+        height: '70%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      
+
+    },
     textoNome: {
         color: '#ffffff',
         fontSize: 25,
@@ -186,6 +201,7 @@ function TelaPrincipal() {
     const logo = require('../../../assets/imagens/imagensAssets/logo_sfundo2.png')
     const [inputName, setInputName] = useState('');
     const [inputSenha, setInputSenha] = useState('');
+    const [avisoErro, setAvisoErro] = useState('');
 
     let jogador
     const [nomeJogador, setNomeJogador] = useState('');
@@ -212,17 +228,19 @@ function TelaPrincipal() {
 
                 }else{
 
-                    console.log('não')
+                    setAvisoErro('Credencias Inválidas')
                 }
                
             } else {
                
                 console.log(data)
+                setAvisoErro('Credencias Inválidas')
                 
             }
         } catch (err) {
             
             console.log(err);
+            setAvisoErro('Credencias Inválidas')
         }
       
 
@@ -273,9 +291,18 @@ function TelaPrincipal() {
 
                 <View style={styles.viewBottom}>
 
+                <View style={styles.viewBottomTop}>
+
+                    <Text style={{color: '#ff0000', fontSize: 25, fontFamily: 'Fredericka-the-Great'}}>{avisoErro}</Text>
+
+                </View>
+
+                <View style={styles.viewBottomBottom}>
                     <TouchableOpacity style={styles.botaoLogin} onPress={fazerLogin}>
                         <Text style={styles.txtBtnLogin}>Entrar</Text>
                     </TouchableOpacity>
+
+                </View>
 
 
                 </View>
