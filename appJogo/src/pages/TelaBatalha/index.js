@@ -4,6 +4,8 @@ import {useState} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import server from '../servidor/index.js'
 
 let deck_esqueletos = [
   {image: require('../../../assets/imagens/esqueletos/esqueleto0.jpg') ,nome: 'Skullshadow', atk: 2000, def: 2000, mag: 6, vel: 4, esp: 13},
@@ -33,7 +35,7 @@ let deckNPC = []
 let deckAtualPlayer = []
 
     let jogador
-    let jogadorLogadoPartida
+
     let userDeck 
     let userName 
     let npcDeck 
@@ -49,13 +51,16 @@ export default function TelaBatalha(){
 
   const navigation = useNavigation()
   const route = useRoute();
-  jogadorLogadoPartida = route.params.jogadorLogado
-  userDeck = jogadorLogadoPartida.deckAtual;
-  userName = jogadorLogadoPartida.nome;
-  dinheiroJogador = jogadorLogadoPartida.dinheiro
+
+  jogador = route.params.dadosDoJogador
+  userName = jogador.nome;
+  userDeck = jogador.deck;
+  dinheiroJogador = Number(jogador.cash)
+  jogador.batalha = true
+
   npcDeck = route.params.npcDeck;
   npcName = route.params.npcName;
-  console.log(jogadorLogadoPartida)
+  console.log(jogador)
 
 
     const[conteudoFeed, setConteudoFeed] = useState(<Conteudo />);
@@ -756,14 +761,14 @@ function Conteudo(){
 
                 setTextResultadoFinal('Vitória')
                 setTextoVitoria('Você ganhou $100 ')
+                console.log(dinheiroJogador)
+               
                 dinheiroJogador = dinheiroJogador + 100
-                jogadorLogadoPartida.dinheiro = dinheiroJogador
-                jogadorLogadoPartida.batalha = true
-                jogador = jogadorLogadoPartida
-                console.log(jogadorLogadoPartida)
-                console.log(jogador)
-
-
+                console.log(dinheiroJogador)
+                
+                atualizarCashJogador()
+                jogador.cash = dinheiroJogador 
+              
 
                 styles.modalTextResultadoFinal = {
                  color: '#ffd700',
@@ -788,6 +793,11 @@ function Conteudo(){
 
                 setTextResultadoFinal('Empate')
                 setTextoVitoria('Você ganhou $50 ')
+                dinheiroJogador = dinheiroJogador + 50
+
+                atualizarCashJogador()
+
+
                 styles.modalTextResultadoFinal = {
                   color: '#007fff',
                   fontSize: 70,
@@ -799,6 +809,24 @@ function Conteudo(){
             }
 
             
+        }
+      }
+
+      async function atualizarCashJogador() {
+        try {
+          const data = await server.post('/user/update/cash', {
+            name: userName,
+            newCash: dinheiroJogador,
+          });
+      
+          if (data.status === 200) {
+            console.log('Jogador atualizado com sucesso!');
+           
+          } else {
+            console.log(data);
+          }
+        } catch (err) {
+          console.error(err);
         }
       }
     
@@ -1156,7 +1184,7 @@ function Conteudo(){
 
                                             <TouchableOpacity
                                               style={[styles.buttonCancelarModal]}
-                                              onPress={() => navigation.navigate('TelaNavegacao', {jogador: jogador})}>
+                                              onPress={() => navigation.navigate('TelaNavegacao')}>
                                               <Text style={styles.textStyleButtonModal}>Fechar</Text>
                                             </TouchableOpacity>
 

@@ -2,6 +2,7 @@ import React from "react";
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Modal } from "react-native";
 import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import server from '../servidor/index.js'
 
@@ -209,44 +210,31 @@ function TelaPrincipal() {
     
 
     const fazerLogin = async () => {
-
         try {
             const data = await server.post('/user/find', {
-                    name: inputName,
-                    password: inputSenha
+                name: inputName,
+                password: inputSenha
             });
+
             if (data.status === 200) {
+                console.log(data);
+                jogador = data.data;
+                setNomeJogador(jogador[0].name);
 
-                console.log(data) 
-                jogador = data.data
-                setNomeJogador (jogador[0].name)
-               
-
-                if(jogador[0].name == inputName && jogador[0].password == inputSenha){
-
-                    setModalVisible(!modalVisible)
-
-                }else{
-
-                    setAvisoErro('Credencias Inválidas')
+                if (jogador[0].name === inputName && jogador[0].password === inputSenha) {
+                    setModalVisible(!modalVisible);
+                } else {
+                    setAvisoErro('Credenciais Inválidas');
                 }
-               
             } else {
-               
-                console.log(data)
-                setAvisoErro('Credencias Inválidas')
-                
+                console.log(data);
+                setAvisoErro('Credenciais Inválidas');
             }
         } catch (err) {
-            
             console.log(err);
-            setAvisoErro('Credencias Inválidas')
+            setAvisoErro('Credenciais Inválidas');
         }
-      
-
-
-
-    }
+    };
     return (
         <View style={styles.container}>
 
@@ -339,13 +327,43 @@ function TelaPrincipal() {
         </View>
     )
 
-    function direcionarTela(){
+    function direcionarTela() {
+      
+        AsyncStorage.getItem("dadosJogadores").then((value) => {
+            let listaJogadores = JSON.parse(value) || [];
 
-        console.log(nomeJogador)
-        setModalVisible(!modalVisible)
-        navigation.navigate('IniciarJogo', {nomeJogador: nomeJogador})
-       
-     }
+            let jogadorExistente = listaJogadores.find(jogador => jogador.userName === nomeJogador);
+      
+
+            if (jogadorExistente) {
+                AsyncStorage.setItem("dadosJogador", JSON.stringify(jogadorExistente));
+
+                if (jogadorExistente.userDeck === '') {
+             
+                    navigation.navigate('IniciarJogo');
+                } else {
+              
+                    navigation.navigate('TelaNavegacao');
+                }
+            } else {
+                let novoJogador = {
+                    userName: nomeJogador,
+                    userDeck: '',
+                    inventory: ''
+                };
+
+                listaJogadores.push(novoJogador);
+
+                AsyncStorage.setItem("dadosJogadores", JSON.stringify(listaJogadores));
+                AsyncStorage.setItem("dadosJogador", JSON.stringify(novoJogador));
+
+        
+                navigation.navigate('IniciarJogo');
+            }
+
+            setModalVisible(!modalVisible);
+        });
+    }
 }
 
 

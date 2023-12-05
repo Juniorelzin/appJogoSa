@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import server from '../servidor/index.js'
 
 let deck_esqueletos = [
@@ -276,12 +278,33 @@ function Conteudo(){
     const starterDeck2 = require('../../../assets/imagens/imagensAssets/deck_Abertura2.png')
     const starterDeck3 = require('../../../assets/imagens/imagensAssets/deck_Abertura3.png')
     const route = useRoute();
+
+    const [jogadorDados, setJogadorDados] = useState('')
   
-    const nomejogador = route.params.nomeJogador;
-    let dataJogador
-    let dadosJogador
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const storedData = await AsyncStorage.getItem('dadosJogador');
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setJogadorDados(parsedData);
+            console.log(parsedData)
+            console.log('ola')
+          }else{
+            console.log('oi')
+          }
+        } catch (error) {
+          console.error('Erro ao obter dados do AsyncStorage:', error);
+          console.log('merda')
+        }
+      };
+  
+      fetchData();
+    }, []); 
+  
+    let nomejogador = jogadorDados.userName
     let userDeck
-    const [dadosCarregados, setDadosCarregados] = useState(false);
+    const [dadosCarregados, setDadosCarregados] = useState(true);
    
 
     const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
@@ -291,51 +314,17 @@ function Conteudo(){
     const [imageIconEsp, setimageIconEsp] = useState(require('../../../assets/imagens/imagensAssets/iconEsp.png'))
 
 
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const data = await server.post('/user/find/player', {
-              name: nomejogador,
-            });
-    
-            if (data.status === 200) {
-              console.log(data);
-              dataJogador = data.data;
-    
-              if (nomejogador === dataJogador[0].name) {
-                dadosJogador = dataJogador[0];
-                console.log(dadosJogador);
-                console.log('ola2');
-              } else {
-                console.log('não');
-              }
-    
-              setDadosCarregados(true); // Indica que os dados foram carregados
-            } else {
-              console.log(data);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        };
-    
-        fetchData();
-      }, [nomejogador]); // Adiciona nomejogador como uma dependência para garantir que o efeito seja reexecutado quando nomejogador mudar
-    
-      // Restante do seu código ...
-
+      
 
       function escolherDeck() {
         if (!dadosCarregados) {
-          // Aguarde até que os dados sejam carregados
           console.log("Aguarde até que os dados sejam carregados.");
           return;
         }
     
      
         userDeck = modalContent;
-        console.log(userDeck)
-        console.log(nomejogador)
+ 
     
         atualizarJogador();
     
@@ -351,7 +340,13 @@ function Conteudo(){
     
           if (data.status === 200) {
             console.log("Jogador atualizado com sucesso!");
-            navigation.navigate('TelaNavegacao', { userDeck: userDeck, userName: nomejogador })
+            let jogador = [{
+              userName: nomejogador,
+              userDeck: userDeck,
+              inventory: ''
+          }]
+            AsyncStorage.setItem("dadosJogador", JSON.stringify(jogador))
+            navigation.navigate('TelaNavegacao')
           } else {
             console.log(data);
           }

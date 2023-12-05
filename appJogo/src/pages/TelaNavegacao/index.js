@@ -3,6 +3,7 @@ import {Animated ,ImageBackground, View, Text, StyleSheet, TouchableOpacity, Ima
 import {useState, useEffect} from 'react';
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 
 import server from '../servidor/index.js'
@@ -46,75 +47,163 @@ let vetorFalasVendedor = [
 let indiceFala
 
 
-let jogadorLogado = 0
-let userName
-let userDeck
-let userCash
-let inventario = [
-]
+let dados
+let dadosDoJogador
+let jogadoresLista
+let logadoJogador
+let userName;
+let userDeck;
+let userCash;
+let inventario = [];
+let cont = 0
 
-
-export default function TelaNavegacao(){
-
-
-    const [recarregarTelaShop, setRecarregarTelaShop] = useState(false);
-    
-    if(jogadorLogado == 0 ){
-    
-    
-      const route = useRoute();
-      jogadorLogado = []
-      userDeck = route.params.userDeck
-      userName = route.params.userName;
-
-    };
-
-    useEffect(() => {
+export default function TelaNavegacao() {
+  const [recarregarTelaShop, setRecarregarTelaShop] = useState(false);
+  const [recarregarTelaDeck, setRecarregarTelaDeck] = useState(false);
   
-      verificarBanco();
+  const [jogadorLogado, setJogadorLogado] = useState({});
+  const [listaJogadores, setListaJogadores] = useState([]);
+  const [nomeJogador, setNomeJogador] = useState('');
+  const [deckJogador, setDeckJogador] = useState('');
+  const [inventarioJogador, setInventarioJogador] = useState('');
 
-    }, [userCash, recarregarTelaShop]); 
+  useEffect(() => {
 
-    const verificarBanco = async () => {
-
-      try {
-          const data = await server.post('/user/find/player', {
-                  name: userName,
-          });
-          console.log(userName)
-          if (data.status === 200) {
-    
-              console.log(data)  
-    
-              if(userName == userName){
-    
-                 let dadosJogador = data.data
-                  userDeck = jogadorLogado.deckAtual;
-                  userCash = dadosJogador[0].cash
-                  setDinheiroJogador(userCash)
-    
-    
-              }else{
-    
-                  console.log('não')
-              }
-             
-          } else {
-             
-              console.log(data)
-              
-          }
-      } catch (err) {
-          
-          console.log(err);
-       
-      }
-    
+    console.log(cont)
+    if(cont == 0){
+      setTelaMundo('Mundo 1')
+      cont++
+      console.log(cont)
+    }else{
+      setTelaMundo(`$ ${userCash}`);
+      console.log(cont)
     }
+   
+  }, [userCash,jogadorLogado]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const jogadorLogadoData = await AsyncStorage.getItem('dadosJogador');
+        const listaJogadoresData = await AsyncStorage.getItem('dadosJogadores');
+  
+        if (jogadorLogadoData) {
+          const parsedJogadorLogado = JSON.parse(jogadorLogadoData);
+          
+          if (Array.isArray(parsedJogadorLogado)) {
+
+            setJogadorLogado(parsedJogadorLogado[0]);
+            setNomeJogador(parsedJogadorLogado[0].userName);
+            setDeckJogador(parsedJogadorLogado[0].userDeck);
+            setInventarioJogador(parsedJogadorLogado[0].inventory);
+         
+          } else {
+            setJogadorLogado(parsedJogadorLogado);
+            setNomeJogador(parsedJogadorLogado.userName);
+            setDeckJogador(parsedJogadorLogado.userDeck);
+            setInventarioJogador(parsedJogadorLogado.inventory);
+          
+          }
+       
+  
+          console.log('Dados do jogador logado obtidos com sucesso.');
     
+        } else {
+          console.log('Nenhum dado do jogador logado encontrado.');
+        }
+  
+        if (listaJogadoresData) {
+          const parsedListaJogadores = JSON.parse(listaJogadoresData);
+          setListaJogadores(parsedListaJogadores);
+          console.log('Dados da lista de jogadores obtidos com sucesso.');
+        } else {
+          console.log('Nenhum dado na lista de jogadores encontrado.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter dados do AsyncStorage:', error);
+      }
+    };
+  
+    fetchData();
+  }, [userDeck, inventario]); 
+  
+  useEffect(() => {
+    verificarBanco();
+  }, [userCash, recarregarTelaShop, nomeJogador, recarregarTelaDeck, dinheiroJogador]);
+
+  const verificarBanco = async () => {
+    try {
+      const data = await server.post('/user/find/player', {
+        name: nomeJogador,
+      });
+
+      if (data.status === 200) {
+        console.log(data);
+   
+
+        if (nomeJogador === jogadorLogado.userName) {
+          const dadosJogador = data.data[0];
+
+          if(inventarioJogador == ''){
+            console.log(1)
+          }else{
+            inventario = inventarioJogador
+          }
+         
+          jogadoresLista = listaJogadores
+          logadoJogador = jogadorLogado
+          userName = nomeJogador
+          userDeck = deckJogador
+          userCash = dadosJogador.cash
+          
+          setDinheiroJogador(userCash);
+
+            dados = {
+            nome: userName,
+            deck: userDeck,
+            cash: userCash,
+            batalha: false
+          }
+          dadosDoJogador = dados
+       
+       
+
+          
+      
+        } else {
+          console.log('não');
+        }
+      } else {
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
+  useEffect(() => {
+    atualizarJogador();
+  }, [jogadorLogado]);
+
+function atualizarJogador(){
+
+  for (let i = 0; i < listaJogadores.length; i++) {
+    if (listaJogadores[i].userName === jogadorLogado.userName) {
+      listaJogadores.splice(i, 1, jogadorLogado);
+      AsyncStorage.setItem('dadosJogadores', JSON.stringify(listaJogadores));
+    }
+  }  
+
+}
+
     
    const recarregarTelaShopFunction = () => {
     setRecarregarTelaShop((prev) => !prev);
+  };
+
+  const recarregarTelaDeckFunction = () => {
+    setRecarregarTelaDeck((prev) => !prev);
   };
     
 
@@ -127,12 +216,16 @@ export default function TelaNavegacao(){
     const[middleColor, setMiddleColor] = useState('#3399cc');
     const[rightColor, setRightColor] = useState('#000000');
     
-    const[dinheiroJogador, setDinheiroJogador] = useState(0);
+    const[dinheiroJogador, setDinheiroJogador] = useState(userCash);
+    const[telaMundo, setTelaMundo] = useState("Mundo 1");
+
+  
 
     function mostrarShop(){
-      setConteudoFeed(<TelaShop recarregarTelaShop={recarregarTelaShopFunction} />)
 
+      setConteudoFeed(<TelaShop recarregarTelaShop={recarregarTelaShopFunction} />)
       indiceFala = Math.floor(Math.random() * vetorFalasVendedor.length)
+      setTelaMundo(`$ ${dinheiroJogador}`)
 
       setLeftColor('#3399cc')
       setMiddleColor('#000000')
@@ -140,6 +233,7 @@ export default function TelaNavegacao(){
     }
     function mostrarMapa(){
       setConteudoFeed(<TelaMapa />)
+      setTelaMundo("Mundo 1")
 
       setLeftColor('#000000')
       setMiddleColor('#3399cc')
@@ -147,7 +241,8 @@ export default function TelaNavegacao(){
 
     }
     function mostrarDeck(){
-      setConteudoFeed(<TelaDeck />)
+      setConteudoFeed(<TelaDeck recarregarTelaDeck={recarregarTelaDeckFunction}/>)
+      setTelaMundo(`$ ${dinheiroJogador}`)
 
       setLeftColor('#000000')
       setMiddleColor('#000000')
@@ -160,7 +255,7 @@ export default function TelaNavegacao(){
 
             <View style={styles.header}>
 
-            <Text style={styles.textHeader}>{userName}</Text> <Text style={styles.textHeader}>$ {dinheiroJogador}</Text>
+            <Text style={styles.textHeader}>{nomeJogador}</Text> <Text style={styles.textHeader}>{telaMundo}</Text>
 
             </View>
 
@@ -1171,7 +1266,7 @@ return(
 
                                     <TouchableOpacity
                                         style={[styles.BotaoBatalharModal]}
-                                        onPressIn={() => navigation.navigate('TelaBatalha', { jogadorLogado: jogadorLogado, npcDeck: modalConteudo.deck, npcName: modalConteudo.nome })}
+                                        onPressIn={() => navigation.navigate('TelaBatalha', { dadosDoJogador: dadosDoJogador, npcDeck: modalConteudo.deck, npcName: modalConteudo.nome })}
                                         onPressOut={() => setModalVisible(!modalVisible)}>
                                         <Text style={styles.textoBotaoBatalharModal}>Batalhar</Text>
                                     </TouchableOpacity>
@@ -1607,7 +1702,7 @@ async function verificarCompra() {
     try {
       userCash = userCash - custocarta1;
 
-      console.log(userCash);
+    
 
       const sortearItem = () => {
         const indiceAleatorio = Math.floor(Math.random() * modalContent.length);
@@ -1617,11 +1712,26 @@ async function verificarCompra() {
       const itemSorteado = sortearItem();
       console.log('Item sorteado:', itemSorteado);
       inventario.push(itemSorteado);
+
+      let jogador = [{
+        userName: userName,
+        userDeck: userDeck,
+        inventory: inventario
+    }]
+      AsyncStorage.setItem("dadosJogador", JSON.stringify(jogador))
+
+      for (let i = 0; i < jogadoresLista.length; i++) {
+        if (jogadoresLista[i].userName === logadoJogador.userName) {
+          jogadoresLista.splice(i, 1, logadoJogador);
+          AsyncStorage.setItem('dadosJogadores', JSON.stringify(jogadoresLista));
+        }
+      }
+    
       setStatsCardShop(itemSorteado);
       setModalVisibleShop(!modalVisibleShop);
       setModalVisible(!modalVisible);
 
-      await atualizarCashJogador(); // Espera pela conclusão da atualização do jogador
+      await atualizarCashJogador();
       console.log('Compra realizada com sucesso!');
     } catch (error) {
       console.error(error);
@@ -1638,8 +1748,6 @@ async function atualizarCashJogador() {
 
     if (data.status === 200) {
       console.log('Jogador atualizado com sucesso!');
-      console.log(userName);
-      console.log(userCash);
       recarregarTela()
       setTextoVendedor1('Muito')
       setTextoVendedor2('Obrigado')
@@ -1655,16 +1763,28 @@ async function atualizarCashJogador() {
 
 }
 
-function TelaDeck(){
+function TelaDeck({recarregarTelaDeck}){
 
   const [modalVisibleDeck, setModalVisibleDeck] = useState(false);
   const [statsCardDeck, setStatsCardDeck] = useState(0);
 
   const [textoBtnTrocarCarta, setTextoBtnTrocarCarta] = useState()
   const [textoMaisCartas, setTextoMaisCartas] = useState()
-  
-  
 
+  const[inventarioPlayer, setInventario] = useState(inventario)
+  
+  
+  
+   const sincronizarInventario = () => {
+
+    const inventarioGlobal = inventario;
+    setInventario(inventarioGlobal);
+  };
+
+  useEffect(() => {
+    sincronizarInventario();
+    recarregarTelaDeck();
+  }, [userDeck]); 
 
 
   const [imageIconAtk, setimageIconAtk] = useState(require('../../../assets/imagens/imagensAssets/iconAtk.png'))
@@ -1678,9 +1798,9 @@ function TelaDeck(){
   const segundaLinha = userDeck.slice(meio);
 
   const objetosPorLinha = 5;
-  const numeroDeColunas = Math.ceil(inventario.length / objetosPorLinha);
+  const numeroDeColunas = Math.ceil(inventarioPlayer.length / objetosPorLinha);
   const colunas = Array.from({ length: numeroDeColunas }, (_, index) =>
-  inventario.slice(index * objetosPorLinha, (index + 1) * objetosPorLinha)
+  inventarioPlayer.slice(index * objetosPorLinha, (index + 1) * objetosPorLinha)
   );
 
   return(
@@ -1933,7 +2053,20 @@ function TelaDeck(){
       let posicaoCarta = userDeck.indexOf(statsCardDeck)
       setTextoMaisCartas('')
       userDeck.splice(posicaoCarta,1)
-      inventario.push(statsCardDeck)
+      inventarioPlayer.push(statsCardDeck)
+      let jogador = [{
+        userName: userName,
+        userDeck: userDeck,
+        inventory: inventarioPlayer
+    }]
+      AsyncStorage.setItem("dadosJogador", JSON.stringify(jogador))
+
+      for (let i = 0; i < jogadoresLista.length; i++) {
+        if (jogadoresLista[i].userName === logadoJogador.userName) {
+          jogadoresLista.splice(i, 1, logadoJogador);
+          AsyncStorage.setItem('dadosJogadores', JSON.stringify(jogadoresLista));
+        }
+      }
       setModalVisibleDeck(!modalVisibleDeck)
      
 
@@ -1944,10 +2077,23 @@ function TelaDeck(){
         setTextoMaisCartas('Seu deck tem mais de 6 cartas')
 
       }else{
-        let posicaoCarta = inventario.indexOf(statsCardDeck)
+        let posicaoCarta = inventarioPlayer.indexOf(statsCardDeck)
           setTextoMaisCartas('')
-          inventario.splice(posicaoCarta,1)
+          inventarioPlayer.splice(posicaoCarta,1)
           userDeck.push(statsCardDeck)
+          let jogador = [{
+            userName: userName,
+            userDeck: userDeck,
+            inventory: inventarioPlayer
+        }]
+          AsyncStorage.setItem("dadosJogador", JSON.stringify(jogador))
+
+          for (let i = 0; i < jogadoresLista.length; i++) {
+            if (jogadoresLista[i].userName === logadoJogador.userName) {
+              jogadoresLista.splice(i, 1, logadoJogador);
+              AsyncStorage.setItem('dadosJogadores', JSON.stringify(jogadoresLista));
+            }
+          }
           setModalVisibleDeck(!modalVisibleDeck)
          
       }

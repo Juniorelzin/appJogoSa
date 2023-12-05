@@ -59,6 +59,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
 
     },
+    viewBottomTop:{
+        height: '15%',
+        width: '100%',
+        alignItems:'center',
+        justifyContent: 'center'
+    },
+    viewBottomMiddle:{
+        flexDirection: 'row',
+        height: '15%',
+        width: '100%',
+        alignItems:'center',
+        justifyContent: 'center'
+    },
+    viewBottomBottom:{
+        height: '70%',
+        width: '100%',
+        alignItems:'center',
+        justifyContent: 'center'
+    },
     textoH1:{
         color: '#ffffff',
         fontSize: 35,
@@ -196,10 +215,12 @@ function Cadastro(){
 
     const [avisoName, setAvisoName] = useState('')
     const [avisoEmail, setAvisoEmail] = useState('')
+    const [avisoSenha, setAvisoSenha] = useState('')
+    const [avisoErro, setAvisoErro] = useState('');
+   
 
     let jogador
-    const [compararName, setCompararName] = useState('')
-    const [compararEmail, setCompararEmail] = useState('')
+   
 
 
     const mudarCheckbox = (value) => {
@@ -212,10 +233,17 @@ function Cadastro(){
         let verificarEmail = inputEmail
         let verificarPassword = inputSenha
 
-        if(verificarName == '' || verificarName == null || verificarEmail == '' || verificarEmail == null || verificarPassword == '' || verificarPassword == null){
-                    console.log('oiiiiiiii')
-        }else{
+        setAvisoName('')
+        setAvisoEmail('')
+        setAvisoSenha('')
+        setAvisoErro('')
 
+        if(verificarName == '' || verificarName == null || verificarEmail == '' || verificarEmail == null || verificarPassword == '' || verificarPassword == null){
+            setAvisoErro('Os compos devem estar preenchidos')
+        }else if(verificarPassword.length < 8){
+            setAvisoSenha('Sua senha deve ter mais de 7 caracteres')
+        }else{
+            
             verificarNome()
         
         }
@@ -244,93 +272,60 @@ function Cadastro(){
     }
 
     const verificarNome = async () => {
-
         try {
-            const data = await server.post('/user/find/compareName', {
-                    name: inputName,
-            });
-            if (data.status === 200) {
-
-                console.log(data) 
-                jogador = data.data
-                // setCompararName(jogador.name)
-                console.log(jogador.name + 'oii')
-                console.log(inputName + 'olaa')
-
-                const esperar = async () =>{
-
-                    const nome = await(jogador.name)
-                    setCompararName(nome)
-                    console.log('caralhão')
-
-                }
-    
-                esperar()
-                
-                if(compararName == inputName){
-
-                    setAvisoName('Esse nome já esta em uso')
-                    console.log('olaaaaaa')
-                }
-                else{
-                    verificarEmail()
-                    console.log('oiiiiii')
-                }
-               
-            } else {
-               
-                console.log(data)
-                console.log('cadeeeeeeeee')
-                
-               
-                
+          const data = await server.post('/user/find/compareName', {
+            name: inputName,
+          });
+      
+          if (data.status === 200) {
+            console.log(data);
+            jogador = data.data;
+            console.log('achou11111')
+            console.log(jogador)
+      
+            if (!jogador || jogador.name != inputName) {
+              verificarEmail();
+              console.log('achou')
+            } else if (jogador && jogador.name === inputName) {
+              setAvisoName('Esse nome já está em uso');
             }
+          } else {
+            console.log(data);
+          }
         } catch (err) {
-            
-            console.log(err);
-            console.log('noiiiiiiiiii')
-         
+          console.log(err);
         }
-        }
-    
+      };
         
-            const verificarEmail = async () => {
-
-                try {
-                    const data = await server.post('/user/find/compareEmail', {
-                            email: inputEmail,
-                    });
-                    if (data.status === 200) {
-        
-                        console.log(data) 
-                        jogador = data.data
-                        setCompararEmail(jogador.email)
-                        console.log(jogador.email)
-                        console.log(inputEmail)
-                        console.log(compararEmail)
-                        console.log('caralhoooo')
-                
-                        if(compararEmail == inputEmail){
-        
-                            setAvisoEmail('Esse email já esta em uso')
-                        }
-                        else{
-                            cadastrar()
-                        }
-                       
-                    } else {
-                       
-                        console.log(data)
-                       
-                        
-                    }
+      const verificarEmail = async () => {
+        try {
+          const data = await server.post('/user/find/compareEmail', {
+            email: inputEmail,
+          });
+      
+          if (data.status === 200) {
+            console.log(data);
+            jogador = data.data;
+            console.log('oi')
+            console.log(jogador)
+            console.log('OI')
+      
+            if (!jogador || jogador.email != inputEmail) {
+              cadastrar();
+              console.log('ola')
+            } else if (jogador && jogador.email === inputEmail) {
+              setAvisoEmail('Esse email já está em uso');
+              console.log('nois')
+            }
+          } else {
+            console.log(data);
+            console.log('vois')
+          }
         } catch (err) {
-            
-            console.log(err);
-           
+          console.log(err);
+          console.log('oxi')
         }
-
-    }
+      };
 
 return(
 
@@ -351,7 +346,7 @@ return(
 
         <Text style={styles.textoNome}>Escolha um nome de usuário:</Text>
         <View style={{height: '5%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color: '#ff0000'}}>{avisoName}</Text>
+        <Text style={{color: '#ff0000', fontSize: 15, fontFamily: 'Fredericka-the-Great'}}>{avisoName}</Text>
         </View>
         <TextInput
 
@@ -364,7 +359,7 @@ return(
 
         <Text style={styles.textoEmail}>Digite seu Email:</Text>
         <View style={{height: '5%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color: '#ff0000'}}>{avisoEmail}</Text>
+        <Text style={{color: '#ff0000', fontSize: 15, fontFamily: 'Fredericka-the-Great'}}>{avisoEmail}</Text>
         </View>
         <TextInput
 
@@ -380,7 +375,7 @@ return(
 
         <Text style={styles.textoSenha}>Digite uma senha:</Text>
         <View style={{height: '5%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{color: '#ff0000'}}></Text>
+        <Text style={{color: '#ff0000', fontSize: 15, fontFamily: 'Fredericka-the-Great'}}>{avisoSenha}</Text>
         </View>
         <TextInput
 
@@ -397,7 +392,15 @@ return(
         
         <View style={styles.viewBottom}>
 
-        <View style={{flexDirection: 'row', height: '15%', width: '100%', alignItems:'center', justifyContent: 'center'}}>
+
+        <View style={styles.viewBottomTop}>
+
+            <Text style={{color: '#ff0000', fontSize: 20, fontFamily: 'Fredericka-the-Great'}}>{avisoErro}</Text>
+
+        </View>
+
+        
+        <View style={styles.viewBottomMiddle}>
         <Checkbox
           style={styles.checkbox}
           value={isChecked}
@@ -408,6 +411,7 @@ return(
         <Text style={{color: '#ffffff', marginLeft: 10}}>Tenho mais de 18 anos, e li os </Text>
         <TouchableOpacity onPress={ () => navigation.navigate('TermoDeUsuario')}><Text style={{color: '#3399cc'}} >Termos de usuário !</Text></TouchableOpacity>
         </View>
+        <View style={styles.viewBottomBottom}>
 
                     {/* {isChecked && (setOpacityBotao(1))} */}
 
@@ -423,6 +427,7 @@ return(
         {/* <TouchableOpacity style={styles.botaoCadastrar} disabled={!isChecked} activeOpacity={isChecked ? 0.5 : 1}>
             <Text style={styles.txtBtnCadastar}>Confirmar</Text>
             </TouchableOpacity> */}
+        </View>
 
         </View>
 
@@ -473,6 +478,10 @@ function pegarInputs(){
 }
 function direcionarTela(){
     setModalVisible(!modalVisible)
+    setAvisoName('')
+    setAvisoEmail('')
+    setAvisoSenha('')
+    setAvisoErro('')
     navigation.navigate('TelaDeLogin')
 
 }
