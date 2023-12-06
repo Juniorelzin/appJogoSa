@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const server = axios.create({
     
-   baseURL: "http://10.3.60.226:3000"
+   baseURL: "http://127.0.0.1:3000"
     
 })
 // baseURL: "http://10.3.60.226:3000"

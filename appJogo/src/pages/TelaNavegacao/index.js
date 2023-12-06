@@ -42,7 +42,8 @@ let vetorFalasVendedor = [
   {fala1: 'Olá amigo', fala2: 'procurando por', fala3: 'novas cartas?'},
   {fala1: 'O que...', fala2: 'cartas fortes?', fala3: 'eu tenho!'},
   {fala1: 'Cartas novas', fala2: 'Bonitas e', fala3: 'Fortes...'},
-  {fala1: 'Você não vai', fala2: 'achar cartas', fala3: 'como essas em lugar nenhum!'},  
+  {fala1: 'Você não vai', fala2: 'achar cartas', fala3: 'como essas em lugar nenhum!'},
+  {fala1: 'Novas cartas', fala2: 'Pode', fala3: 'escolher!'},    
 ]
 let indiceFala
 
@@ -54,12 +55,19 @@ let logadoJogador
 let userName;
 let userDeck;
 let userCash;
+let compras
+let batalhas
+let vitorias
+let derrotas
+let empates 
 let inventario = [];
 let cont = 0
+
 
 export default function TelaNavegacao() {
   const [recarregarTelaShop, setRecarregarTelaShop] = useState(false);
   const [recarregarTelaDeck, setRecarregarTelaDeck] = useState(false);
+  const [recarregarTelaUsuario, setRecarregarTelaUsuario] = useState(false);
   
   const [jogadorLogado, setJogadorLogado] = useState({});
   const [listaJogadores, setListaJogadores] = useState([]);
@@ -69,17 +77,17 @@ export default function TelaNavegacao() {
 
   useEffect(() => {
 
-    console.log(cont)
-    if(cont == 0){
+    console.log(`${cont} 1`)
+    if(cont == 0 || cont == 1){
       setTelaMundo('Mundo 1')
       cont++
-      console.log(cont)
+      console.log(`${cont} 2`)
     }else{
       setTelaMundo(`$ ${userCash}`);
-      console.log(cont)
+      console.log(`${cont} 3`)
     }
    
-  }, [userCash,jogadorLogado]);
+  }, [userCash]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,7 +137,7 @@ export default function TelaNavegacao() {
   
   useEffect(() => {
     verificarBanco();
-  }, [userCash, recarregarTelaShop, nomeJogador, recarregarTelaDeck, dinheiroJogador]);
+  }, [userCash, recarregarTelaShop, nomeJogador, recarregarTelaDeck, dinheiroJogador, recarregarTelaUsuario]);
 
   const verificarBanco = async () => {
     try {
@@ -145,7 +153,7 @@ export default function TelaNavegacao() {
           const dadosJogador = data.data[0];
 
           if(inventarioJogador == ''){
-            console.log(1)
+            console.log('inventarioVazio')
           }else{
             inventario = inventarioJogador
           }
@@ -155,6 +163,12 @@ export default function TelaNavegacao() {
           userName = nomeJogador
           userDeck = deckJogador
           userCash = dadosJogador.cash
+          batalhas = dadosJogador.battles
+          compras = dadosJogador.purchase
+          vitorias = dadosJogador.victories
+          derrotas = dadosJogador.losses
+          empates = dadosJogador.draws
+          console.log(dadosJogador)
           
           setDinheiroJogador(userCash);
 
@@ -162,7 +176,12 @@ export default function TelaNavegacao() {
             nome: userName,
             deck: userDeck,
             cash: userCash,
-            batalha: false
+            batalha: false,
+            nBatalhas: batalhas,
+            nVitorias: vitorias,
+            nDerrotas: derrotas,
+            nEmpates: empates,
+            
           }
           dadosDoJogador = dados
        
@@ -184,18 +203,26 @@ export default function TelaNavegacao() {
 
   useEffect(() => {
     atualizarJogador();
-  }, [jogadorLogado]);
+  }, [userCash]);
 
-function atualizarJogador(){
+async function atualizarJogador(){
 
   for (let i = 0; i < listaJogadores.length; i++) {
-    if (listaJogadores[i].userName === jogadorLogado.userName) {
-      listaJogadores.splice(i, 1, jogadorLogado);
-      AsyncStorage.setItem('dadosJogadores', JSON.stringify(listaJogadores));
+    if (listaJogadores[i].userName == jogadorLogado.userName) {
+      let novosDados = {
+        userName: nomeJogador,
+        userDeck: deckJogador,
+        inventory: inventario
+      }
+      listaJogadores.splice(i, 1, novosDados);
+     await AsyncStorage.setItem('dadosJogadores', JSON.stringify(listaJogadores));
+      console.log(`${jogadorLogado.userName}`)
+      console.log(`${listaJogadores[i].userName}`)
     }
   }  
 
 }
+
 
     
    const recarregarTelaShopFunction = () => {
@@ -205,12 +232,17 @@ function atualizarJogador(){
   const recarregarTelaDeckFunction = () => {
     setRecarregarTelaDeck((prev) => !prev);
   };
+  const recarregarTelaUsuarioFunction = () => {
+    setRecarregarTelaUsuario((prev) => !prev);
+  };
     
 
     const[conteudoFeed, setConteudoFeed] = useState(<TelaMapa />);
+
     const[iconMap, setIconMap] = useState(require('../../../assets/imagens/imagensAssets/iconeMap.png'));
     const[iconShop, setIconShop] = useState(require('../../../assets/imagens/imagensAssets/iconeShop.png'));
     const[iconCard, setIconCard] = useState(require('../../../assets/imagens/imagensAssets/iconeCard.png'));
+    const[iconMenu, setIconMenu] = useState(require('../../../assets/imagens/imagensAssets/menuSelect.png'));
 
     const[leftColor, setLeftColor] = useState('#000000');
     const[middleColor, setMiddleColor] = useState('#3399cc');
@@ -249,13 +281,32 @@ function atualizarJogador(){
       setRightColor('#3399cc')
 
     }
+    function mostrarUsuario(){
+      setConteudoFeed(<TelaUsuario recarregarTelaUsuario={recarregarTelaUsuarioFunction}/>)
+      setTelaMundo(`$ ${dinheiroJogador}`)
+
+      setLeftColor('#000000')
+      setMiddleColor('#3399cc')
+      setRightColor('#000000')
+
+    }
 
     return(
         <View style={styles.container}>
 
             <View style={styles.header}>
 
-            <Text style={styles.textHeader}>{nomeJogador}</Text> <Text style={styles.textHeader}>{telaMundo}</Text>
+            <View style={{width:'30%', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.textHeader}>{nomeJogador}</Text> 
+            </View>
+
+            <View style={{width:'40%', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.textHeader}>{telaMundo}</Text>
+            </View>
+
+            <View style={{width:'30%', justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity onPress={mostrarUsuario}><Image style={styles.iconsFooter}source={iconMenu}/></TouchableOpacity>
+            </View> 
 
             </View>
 
@@ -307,10 +358,9 @@ function atualizarJogador(){
        
 
             </View>
+   
                 
-        </View>
-        
-          
+        </View>     
        
     )
 }
@@ -1183,7 +1233,69 @@ modalViewbutton:{
   justifyContent: 'center',
   alignItems: 'center',
 },
- 
+centeredViewModalUsuario: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+modalViewModalUsuario: {
+  height: '99%',
+  width: '99%',
+  borderRadius:25,
+  backgroundColor: '#000000', 
+  alignItems: 'center',
+  justifyContent: 'center',
+  shadowColor: '#000',
+  shadowOffset: {
+  width: 0,
+  height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 4,
+elevation: 5,
+},
+buttonModalUsuario: {
+  height: 50,
+  width: 150,
+  marginTop: 10,
+  backgroundColor: '#3399cc',
+  borderRadius: 25,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  shadowColor: '#171717',
+  shadowOffset: {width: 3, height: 5},
+  shadowOpacity: 0.6,
+  shadowRadius: 3,
+},
+buttonDeleteModalUsuario: {
+  backgroundColor: '#ff0000',
+},
+buttonCloseModalUsuario: {
+  backgroundColor: '#3399cc',
+},
+textStyleModalUsuario: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontWeight: 'bold',
+  fontFamily: 'Fredericka-the-Great',
+  fontSize: 20,
+},
+modalTextModalUsuario: {
+  fontSize: 30,
+  color: '#ff0000',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  fontFamily: 'Fredericka-the-Great',
+  marginBottom: 10
+},
+fundoModalUsuario:{
+  height: 665,
+  width: 370,
+  justifyContent: 'center',
+  alignItems: 'center',
+}
+
  
 });
 
@@ -1340,6 +1452,11 @@ function TelaShop({ recarregarTelaShop }){
   const imageFundoModal = ('../../../assets/imagens/imagensAssets/fundo_modal.jpg')
 
   const custocarta1 = 100
+
+  useEffect(() => {
+    recarregarTela();
+  },[userCash]);
+  
 
   const recarregarTela = () => {
     recarregarTelaShop();
@@ -1731,6 +1848,8 @@ async function verificarCompra() {
       setModalVisibleShop(!modalVisibleShop);
       setModalVisible(!modalVisible);
 
+      compras = compras + 1
+
       await atualizarCashJogador();
       console.log('Compra realizada com sucesso!');
     } catch (error) {
@@ -1744,6 +1863,7 @@ async function atualizarCashJogador() {
     const data = await server.post('/user/update/cash', {
       name: userName,
       newCash: userCash,
+      newPurchase: compras
     });
 
     if (data.status === 200) {
@@ -2119,4 +2239,175 @@ function TelaDeck({recarregarTelaDeck}){
 
   }
 
+}
+function TelaUsuario({recarregarTelaUsuario}){
+
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+
+  useEffect(() => {
+    recarregarTela();
+  },[userCash]);
+  
+
+  const recarregarTela = () => {
+    recarregarTelaUsuario();
+  };
+
+
+  function chamarModal(){
+    setModalVisible(true)
+  }
+  function chamarModal2(){
+    for (let i = 0; i < jogadoresLista.length; i++) {
+      if (jogadoresLista[i].userName === userName) {
+        jogadoresLista.splice(i, 1);
+        AsyncStorage.setItem('dadosJogadores', JSON.stringify(jogadoresLista));
+        AsyncStorage.setItem('dadosJogador', JSON.stringify(0));
+      }
+    }  
+    setModalVisible2(true)
+  }
+  function voltarInicio(){
+  
+    setModalVisible2(!modalVisible2)
+    navigation.navigate('Home')
+  }
+ 
+
+  const deletar = async () => {
+    try {
+      const data = await server.delete('/user/delete', {
+        data: {
+          name: userName,
+        },
+      });
+  
+      if (data.status === 200) {
+        console.log(data);
+        chamarModal2()
+      } else {
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(userName);
+      console.log(err);
+    }
+  };
+  
+    
+  
+
+  return(
+ 
+    <View style={styles.container}>
+
+      <View style={{height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+      <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundo_modal.jpg')} resizeMode="cover" style={styles.fundoModal}>
+
+              <View style={{height: '20%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{fontSize: 55, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>{userName}</Text>
+              </View>
+
+
+              <View style={{height: '60%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                      <View style={{height: '30%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+
+                        <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>Quantas vezes Batalhou:</Text>
+                        <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>{batalhas}</Text>
+                            
+                      </View>
+
+
+                      <View style={{height: '70%', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+
+                            <View style={{height: '100%', width: '33%', justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffd700'}}>Vitórias:</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>{vitorias}</Text>                           
+                            </View>
+
+                            <View style={{height: '100%', width: '34%', justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#007fff'}}>Empates:</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>{empates}</Text>
+                            </View>
+
+                            <View style={{height: '100%', width: '33%', justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ff0000'}}>Derrotas:</Text>
+                                <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ffffff'}}>{derrotas}</Text>
+                            </View>
+                            
+                      </View>
+                      
+                    
+              </View>
+
+              <View style={{height: '20%', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                    <TouchableOpacity onPress={chamarModal}>
+                      <Text style={{fontSize: 25, fontFamily: 'Fredericka-the-Great', color: '#ff0000'}}>Deletar Conta</Text>
+                    </TouchableOpacity>
+              </View>   
+      </ImageBackground> 
+      </View> 
+
+      <View style={styles.centeredViewModalUsuario}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredViewModalUsuario}>
+          <View style={styles.modalViewModalUsuario}>
+          <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundoPergaminho2.png')} resizeMode="cover" style={styles.fundoModalUsuario}>
+            <Text style={styles.modalTextModalUsuario}>Tem certeza</Text>
+            <Text style={styles.modalTextModalUsuario}>que deseja</Text>
+            <Text style={styles.modalTextModalUsuario}>excluir sua conta,</Text>
+            <Text style={styles.modalTextModalUsuario}>e todos os dados </Text>
+            <Text style={styles.modalTextModalUsuario}>armazenados nela?!</Text>
+            <TouchableOpacity
+              style={[styles.buttonModalUsuario, styles.buttonDeleteModalUsuario]}
+              onPress={deletar}>
+              <Text style={styles.textStyleModalUsuario}>Excluir</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.buttonModalUsuario, styles.buttonCloseModalUsuario]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyleModalUsuario}>Fechar</Text>
+            </TouchableOpacity>
+            </ImageBackground>
+          </View>
+        </View>
+      </Modal>
+     
+    </View>
+
+    <View style={styles.centeredViewModalUsuario}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+          setModalVisible2(!modalVisible2);
+        }}>
+        <View style={styles.centeredViewModalUsuario}>
+          <View style={styles.modalViewModalUsuario}>
+          <ImageBackground source={require('../../../assets/imagens/imagensAssets/fundoPergaminho2.png')} resizeMode="cover" style={styles.fundoModalUsuario}>
+            <Text style={styles.modalTextModalUsuario}>Usuário Deletado!</Text>
+            <TouchableOpacity
+              style={[styles.buttonModalUsuario, styles.buttonCloseModalUsuario]}
+              onPress={voltarInicio}>
+              <Text style={styles.textStyleModalUsuario}>Fechar</Text>
+            </TouchableOpacity>
+            </ImageBackground>
+          </View>
+        </View>
+      </Modal>
+     
+    </View>
+
+
+  </View>
+  )
 }

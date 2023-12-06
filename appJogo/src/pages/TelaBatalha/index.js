@@ -40,7 +40,12 @@ let deckAtualPlayer = []
     let userName 
     let npcDeck 
     let npcName
-    let dinheiroJogador 
+    let batalhas
+    let vitorias
+    let derrotas
+    let empates 
+    let dinheiroJogador
+    
 
   
 
@@ -55,6 +60,10 @@ export default function TelaBatalha(){
   jogador = route.params.dadosDoJogador
   userName = jogador.nome;
   userDeck = jogador.deck;
+  batalhas = jogador.nBatalhas;
+  vitorias = jogador.nVitorias;
+  derrotas = jogador.Nderrotas;
+  empates = jogador.nEmpates;
   dinheiroJogador = Number(jogador.cash)
   jogador.batalha = true
 
@@ -764,6 +773,8 @@ function Conteudo(){
                 console.log(dinheiroJogador)
                
                 dinheiroJogador = dinheiroJogador + 100
+                batalhas = batalhas + 1
+                vitorias = vitorias + 1
                 console.log(dinheiroJogador)
                 
                 atualizarCashJogador()
@@ -782,6 +793,13 @@ function Conteudo(){
 
                 setTextResultadoFinal('Derrota')
                 setTextoVitoria('Você ganhou $0 ')
+                batalhas = batalhas + 1
+                derrotas = derrotas + 1
+                
+
+                atualizarCashJogador()
+
+
                 styles.modalTextResultadoFinal = {
                   color: '#ff0000',
                   fontSize: 70,
@@ -794,6 +812,8 @@ function Conteudo(){
                 setTextResultadoFinal('Empate')
                 setTextoVitoria('Você ganhou $50 ')
                 dinheiroJogador = dinheiroJogador + 50
+                batalhas = batalhas + 1
+                empates = empates + 1
 
                 atualizarCashJogador()
 
@@ -814,9 +834,13 @@ function Conteudo(){
 
       async function atualizarCashJogador() {
         try {
-          const data = await server.post('/user/update/cash', {
+          const data = await server.post('/user/update/cash/battle', {
             name: userName,
             newCash: dinheiroJogador,
+            newBattle: batalhas,
+            newVitory: vitorias,
+            newLoss: derrotas,
+            newDraw: empates,
           });
       
           if (data.status === 200) {
